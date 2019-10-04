@@ -1,0 +1,24 @@
+{
+  "name": "ecommerce-workshop",
+  "version": "1.0.0",
+  "description": "## This workshop entails a bunch of tutorials",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel watch src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blockmason/ecommerce-workshop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blockmason/ecommerce-workshop/issues"
+  },
+  "homepage": "https://github.com/blockmason/ecommerce-workshop#readme",
+  "dependencies": {
+    "@blockmason/link-sdk": "^0.1.4",
+    "bulma": "^0.7.5"
+  }
+}

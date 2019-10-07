@@ -101,17 +101,17 @@ App = {
     newProduct = { name: newProductName, id: newProductID, picture: newProductImage, description: newProductDescription, companyName: newProductCompany, amount: newProductAmount }
     this.createProduct(newProduct);
   },
-  storeNewComment: function(commentText) {
+  storeNewComment: function (commentText) {
     console.log('Recording to the blockchain...');
     console.log('Done.');
   },
-  postComment: function(commentID){
+  postComment: function (commentID) {
     let commentText = $('#' + commentID + '-comment-area');
     this.createComment(commentText.val(), commentID);
     this.storeNewComment(commentText.val());
     $('#' + commentID + '-comment-area').val('')
   },
-  createComment: function(comment, commentID){
+  createComment: function (comment, commentID) {
     let commentTemplate = $('#' + commentID).find('.comment:first').clone().removeClass('is-hidden');
     commentTemplate.html('<article class="is-warning message"><div class="message-body">' + comment + ' — Verified Customer </div></article>');
     let lastComment = $('#' + commentID).find('.comment:last');
@@ -120,15 +120,15 @@ App = {
   currentUser: function () {
     return $('#login-input').val();
   },
-  currentUserWallet: function() {
+  currentUserWallet: function () {
     return walletMapping[this.currentUser];
   }
 }
 
 
-$(window).on('load', function () { 
-  App.init(); 
-  $(".post-comment").click(function(){
+$(window).on('load', function () {
+  App.init();
+  $(".post-comment").click(function () {
     App.postComment($('#' + this.id).closest(".column").attr('id'));
   })
 });

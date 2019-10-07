@@ -82,6 +82,7 @@ App = {
     $('#' + product.id).find('.product-description').text(product.description);
     $('#' + product.id).find('.product-amount').text(product.amount);
     $('#' + product.id).find('.comment-area').attr('id', product.id + '-comment-area');
+    $('#' + product.id).find('.card-content').attr('id', product.id + '-card-content');
     $('#' + product.id).find(".post-comment").attr('id', product.id + '-comment');
     $('#' + product.id).find(".product-image").attr("src", product.picture);
   },
@@ -105,13 +106,16 @@ App = {
     console.log('Done.');
   },
   postComment: function(commentID){
-    let commentText = $('#' + commentID + '-area').val();
-    console.log(commentID);
-    this.createComment(commentText);
-    this.storeNewComment(commentText);
+    let commentText = $('#' + commentID + '-comment-area');
+    this.createComment(commentText.val(), commentID);
+    this.storeNewComment(commentText.val());
+    $('#' + commentID + '-comment-area').val('')
   },
-  createComment: function(comment){
-    
+  createComment: function(comment, commentID){
+    let commentTemplate = $('#' + commentID).find('.comment:first').clone().removeClass('is-hidden');
+    commentTemplate.html('<article class="is-warning message"><div class="message-body">' + comment + ' — Verified Customer </div></article>');
+    let lastComment = $('#' + commentID).find('.comment:last');
+    commentTemplate.insertBefore(lastComment);
   },
   currentUser: function () {
     return $('#login-input').val();

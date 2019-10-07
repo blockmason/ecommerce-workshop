@@ -9,18 +9,18 @@ const project = link({
     fetch
 });
 
-async function addQuantity(product, quantity) {
+async function addProduct(product, quantity) {
     const reqBody = {
         "product": product,
-        "addedQuantity": quantity
+        "addQuantity": quantity
       }
       
       try {
-        await project.post('/addQuantity', reqBody);
-        console.log('POST /addQuantity called successfully with request data ', reqBody);
+        await project.post('/addProduct', reqBody);
+        console.log('POST /addProduct called successfully with request data ', reqBody);
       }
       catch(err) {
-        console.log('Error with POST /addQuantity: ',err);
+        console.log('Error with POST /addProduct: ',err);
     }
 }
 
@@ -58,12 +58,12 @@ async function getQuantity(product) {
 }
 
 
-const item = "green_tie";
+const item = "white_tie";
 
-// addQuantity(item, 2);
+// addProduct(item, 2);
 
 // buyProduct(item);
 
-getPurchasers(item);
+// getPurchasers(item);
 
 getQuantity(item);

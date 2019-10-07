@@ -6,9 +6,6 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Online Store</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    <script src='index.js'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="index.css">
 </head>
@@ -37,13 +34,20 @@
 
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-primary">
+                    <div class="buttons" id="login-sign-up-buttons">
+                        <a class="button is-primary"
+                            onclick="$('#login-input').removeClass('is-hidden'); $('#login-sign-up-buttons').addClass('is-hidden');">
                             <strong>Sign up</strong>
                         </a>
-                        <a class="button is-light">
+                        <a class="button is-light"
+                            onclick="$('#login-input').removeClass('is-hidden'); $('#login-sign-up-buttons').addClass('is-hidden');">
                             Log in
                         </a>
+                    </div>
+                </div>
+                <div id="login-input" class="navbar-item field is-hidden">
+                    <div class="control">
+                        <input class="input is-info" type="text" placeholder="Username">
                     </div>
                 </div>
             </div>
@@ -72,7 +76,9 @@
                             </a>
                             <div class="buttons">
                                 <a class="navbar-item is-link button">
-                                    Shopping Cart &nbsp
+                                    <span>
+                                        Shopping Cart
+                                    </span>
                                     <span class="icon">
                                         <i class="fas fa-shopping-cart"></i>
                                     </span>
@@ -118,15 +124,16 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="image is-4by3">
-                            <img class="product-image" src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                            <img class="product-image" src="https://bulma.io/images/placeholders/1280x960.png"
+                                alt="Placeholder image">
                         </figure>
                     </div>
                     <div class="card-content">
                         <div class="media">
                             <div class="media-content">
                                 <p class="title is-4 product-name">Product Name</p>
-                                <p class="subtitle is-6">By Company</p>
-                                <p class="subtitle is-7">6 in stock</p>
+                                <p class="subtitle is-6 company-name">By Company</p>
+                                <p class="subtitle is-7"><span class="product-amount">6</span> in stock</p>
                             </div>
                             <div class="buttons">
                                 <div class="button has-background-warning has-text-black">
@@ -138,14 +145,11 @@
                         <article class="media">
                             <div class="media-content">
                                 <div class="content">
-                                    <p>
-                                        <strong>Barbara Middleton</strong>
-                                        <br>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus,
+                                    <strong>Product Description</strong>
+                                    <p class="product-description"> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        elit. Duis porta eros lacus,
                                         nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor
                                         blandit rutrum. Nunc in tempus turpis.
-                                        <br>
-                                        <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
                                     </p>
                                 </div>
                         </article>
@@ -166,8 +170,76 @@
                     </div>
                 </div>
             </div>
+            <div id="add-product" class="column is-one-quarter">
+                <a class="button is-large is-fullwidth is-info" onclick="$( '.modal' ).addClass('is-active');">
+                    <span class="icon is-large">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span>
+                        Add New Product
+                    </span>
+                </a>
+            </div>
         </div>
     </section>
+    <div class="modal" id="add-new-product">
+        <div class="modal-background" onclick="$( '.modal' ).removeClass('is-active');"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Add New Product</p>
+                <button class="delete" aria-label="close" onclick="$( '.modal' ).removeClass('is-active');"></button>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content ... -->
+                <div class="field">
+                    <label class="label">Product Name</label>
+                    <div class="control">
+                        <input id="new-product-name" class="input" type="text" placeholder="The name of the product">
+                    </div>
+
+                </div>
+                <div class="field">
+                    <label class="label">Seller Name</label>
+                    <div class="control">
+                        <input id="new-product-company" class="input" type="text" placeholder="Blockmason">
+                    </div>
+
+                </div>
+                <div class="field">
+                    <label class="label">Image URL</label>
+                    <div class="control">
+                        <input id="new-product-image" class="input" type="text"
+                            placeholder="https://my-product-image.com">
+                    </div>
+
+                </div>
+                <div class="field">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <textarea id="new-product-description" class="textarea"
+                            placeholder="Enter a product description here"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Amount Available</label>
+                    <div class="control">
+                        <input id="new-product-amount" class="input" type="text" placeholder="12">
+                    </div>
+
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button id="new-product-submit" class="button is-success" onclick="App.createNewProduct();">Save
+                    changes</button>
+                <button class="button" onclick="$( '.modal' ).removeClass('is-active');">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src='index.js'></script>
 </body>
 
 </html>

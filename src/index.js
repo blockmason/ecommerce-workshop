@@ -1,14 +1,19 @@
-
-function createNewProduct(product){
-    $("#template-object").clone().appendTo("#product-area").attr("id", product.id).removeClass("is-hidden");
+// Create a product card based on product information
+function createProductCard(product){
+    $("#template-object").clone().prependTo("#product-area").attr("id", product.id).removeClass("is-hidden");
     $('#' + product.id).find('.product-name').text(product.name);
     $('#' + product.id).find(".product-image").attr("src", product.picture);
 }
 
+// print all product cards in the store
 function printProducts(){
     for(i = 0; i < store.length ; i++ ){
-        createNewProduct(store[i])
+        createProductCard(store[i])
     }
+}
+
+function showModal(){
+  console.log('modal');
 }
 
 store = [

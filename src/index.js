@@ -81,6 +81,8 @@ App = {
     $('#' + product.id).find('.company-name').text(product.companyName);
     $('#' + product.id).find('.product-description').text(product.description);
     $('#' + product.id).find('.product-amount').text(product.amount);
+    $('#' + product.id).find('.comment-area').attr('id', product.id + '-comment-area');
+    $('#' + product.id).find(".post-comment").attr('id', product.id + '-comment');
     $('#' + product.id).find(".product-image").attr("src", product.picture);
   },
   printProducts: function () {
@@ -98,6 +100,19 @@ App = {
     newProduct = { name: newProductName, id: newProductID, picture: newProductImage, description: newProductDescription, companyName: newProductCompany, amount: newProductAmount }
     this.createProduct(newProduct);
   },
+  storeNewComment: function(commentText) {
+    console.log('Recording to the blockchain...');
+    console.log('Done.');
+  },
+  postComment: function(commentID){
+    let commentText = $('#' + commentID + '-area').val();
+    console.log(commentID);
+    this.createComment(commentText);
+    this.storeNewComment(commentText);
+  },
+  createComment: function(comment){
+    
+  },
   currentUser: function () {
     return $('#login-input').val();
   },
@@ -107,4 +122,9 @@ App = {
 }
 
 
-$(window).on('load', function () { App.init() });
+$(window).on('load', function () { 
+  App.init(); 
+  $(".post-comment").click(function(){
+    App.postComment($('#' + this.id).closest(".column").attr('id'));
+  })
+});

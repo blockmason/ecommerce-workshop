@@ -19,6 +19,7 @@
   "homepage": "https://github.com/blockmason/ecommerce-workshop#readme",
   "dependencies": {
     "@blockmason/link-sdk": "^0.1.4",
-    "bulma": "^0.7.5"
+    "bulma": "^0.7.5",
+    "node-fetch": "^2.6.0"
   }
 }

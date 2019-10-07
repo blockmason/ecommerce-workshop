@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Online Store</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src='index.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img src="https://blockmason.link/wp-content/uploads/2018/11/logo-dark.svg" width="112" height="28">
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item">
+                    Home
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-light">
+                            Log in
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="hero is-info is-medium">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+
+                        <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenuHeroA" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a class="navbar-item is-active">
+                                Home
+                            </a>
+                            <a class="navbar-item">
+                                My Profile
+                            </a>
+                            <div class="buttons">
+                                <a class="navbar-item is-link button">
+                                    Shopping Cart &nbsp
+                                    <span class="icon">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Hero content: will be in the middle -->
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title">
+                    Celebrate This Holiday Season!
+                </h1>
+                <h2 class="subtitle">
+                    Check out our new collection just in time for the holidays.
+                </h2>
+            </div>
+        </div>
+
+        <!-- Hero footer: will stick at the bottom -->
+        <div class="hero-foot">
+            <nav class="tabs">
+                <div class="container">
+                    <ul>
+                        <li class="is-active"><a>Home</a></li>
+                        <li><a class="has-background-warning has-text-black">New Deals</a></li>
+                        <li><a>Holiday Sale</a></li>
+                        <li><a>Your Store</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <section class="section">
+        <div id="product-area" class="columns is-multiline">
+            <!-- Products Go Here -->
+            <div id="template-object" class="column is-one-quarter is-hidden">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img class="product-image" src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4 product-name">Product Name</p>
+                                <p class="subtitle is-6">By Company</p>
+                                <p class="subtitle is-7">6 in stock</p>
+                            </div>
+                            <div class="buttons">
+                                <div class="button has-background-warning has-text-black">
+                                    Buy Now
+                                </div>
+                            </div>
+                        </div>
+
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>Barbara Middleton</strong>
+                                        <br>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus,
+                                        nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor
+                                        blandit rutrum. Nunc in tempus turpis.
+                                        <br>
+                                        <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+                                    </p>
+                                </div>
+                        </article>
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="field">
+                                    <p class="control">
+                                        <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <p class="control">
+                                        <button class="button">Post comment</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

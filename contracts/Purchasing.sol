@@ -18,8 +18,8 @@ contract Purchasing {
         return productList[product].purchasers.length;
     }
     
-    function addQuantity(string memory product, uint addedQuantity) public {
-        productList[product].quantity += addedQuantity;
+    function addProduct(string memory product, uint addQuantity) public {
+        productList[product].quantity += addQuantity;
     }
     
     function getPurchasers(string memory product) public view returns (address[] memory purchasers) {

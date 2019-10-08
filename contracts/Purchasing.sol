@@ -4,6 +4,9 @@ contract Purchasing {
     struct ProductDetails {
         uint quantity;
         address[] purchasers;
+        string url;
+        string description;
+        string price;
     }
     mapping(string => ProductDetails) public productList;
     address public authority;
@@ -12,7 +15,12 @@ contract Purchasing {
         authority = msg.sender;
     }
     
-    function addProduct(string memory product, uint addQuantity) public {
+    function addProduct(string memory product, uint addQuantity, string memory url) public {
+        productList[product].quantity = addQuantity;
+        productList[product].url = url;
+    }
+
+       function addQuantity(string memory product, uint addQuantity) public {
         productList[product].quantity += addQuantity;
     }
     

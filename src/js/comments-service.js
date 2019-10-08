@@ -14,6 +14,7 @@ module.exports = {
                 "asset": ID,
                 "comment": commentText
             };
+            $('#' + ID + '-comment-area').val('');
             this.storeComments(reqBody);
             await commentsMicroservice.post('/postComment', reqBody);
     },

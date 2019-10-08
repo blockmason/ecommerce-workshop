@@ -115,11 +115,7 @@ App = {
     let commentText = $('#' + commentID + '-comment-area');
     if (commentText.val().trim() == '') return;
     this.createComment(commentText.val().trim(), commentID);
-    $(".post-comment").click(function () {
-      App.postComment($('#' + this.id).closest(".column").attr('id'));
-    })
     await this.storeNewComment(commentText.val().trim(), commentID);
-    $('#' + commentID + '-comment-area').val('')
     commentsService.readCommentsInMemory();
   },
   createComment: function (comment, commentID) {
@@ -140,7 +136,10 @@ App = {
   },
   currentUserWallet: function () {
     return walletMapping[this.currentUser];
-  }
+  },
+  purchase: function(){
+    paymentService()
+  },
 }
 
 

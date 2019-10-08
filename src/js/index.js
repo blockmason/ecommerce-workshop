@@ -1,4 +1,6 @@
-
+// const paymentService = require('./payments-service.js');
+const commentsService = require('./comments-service.js');
+// const purchaseService = require('./purchase-service.js');
 
 App = {
   // this will be replaced
@@ -73,7 +75,8 @@ App = {
     'Harish': '0x83fe96cdd189e4f3c965f37309e1597a8e76aae2'.toLowerCase()
   },
   init: function () {
-    this.printProducts()
+    this.printProducts();
+    this.loadComments();
   },
   createProduct: function (product) {
     $("#template-object").clone().prependTo("#product-area").attr("id", product.id).removeClass("is-hidden");
@@ -101,21 +104,31 @@ App = {
     newProduct = { name: newProductName, id: newProductID, picture: newProductImage, description: newProductDescription, companyName: newProductCompany, amount: newProductAmount }
     this.createProduct(newProduct);
   },
-  storeNewComment: function (commentText) {
+  storeNewComment: async function (commentText, ID) {
     console.log('Recording to the blockchain...');
+    await commentsService.postComment(commentText, ID);
     console.log('Done.');
   },
-  postComment: function (commentID) {
+  postComment: async function (commentID) {
     let commentText = $('#' + commentID + '-comment-area');
-    this.createComment(commentText.val(), commentID);
-    this.storeNewComment(commentText.val());
+    if(commentText.val().trim() == '') return;
+    this.createComment(commentText.val().trim(), commentID);
+    await this.storeNewComment(commentText.val().trim(), commentID);
     $('#' + commentID + '-comment-area').val('')
+    commentsService.readCommentsInMemory();
   },
   createComment: function (comment, commentID) {
     let commentTemplate = $('#' + commentID).find('.comment:first').clone().removeClass('is-hidden');
     commentTemplate.html('<article class="is-warning message"><div class="message-body">' + comment + ' — Verified Customer </div></article>');
     let lastComment = $('#' + commentID).find('.comment:last');
     commentTemplate.insertBefore(lastComment);
+  },
+  loadComments: async function() {
+    await commentsService.getComments();
+    let commentArray = commentsService.readCommentsInMemory();
+    for(i = 0; i <= commentArray.length; i++) {
+      this.createComment(commentArray[i].comment, commentArray[i].asset);
+    }
   },
   currentUser: function () {
     return $('#login-input').val();

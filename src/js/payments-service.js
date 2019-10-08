@@ -7,26 +7,31 @@ const paymentMicroservice = link({
 });
 
 const paymentService = {
-    transfer: function (amount) {
-        const reqBody = {
-            "_to": "0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44".toLowerCase(),
-            "_value": (amount * Math.pow(10, 18)).toString(16)
-        };
 
-        try {
-            paymentMicroservice.post('/transferFrom', reqBody);
-            console.log('Purchase made - funds transferred to seller');
-        } catch (err) {
-            console.log(err);
-            alert("Blockchain network payment request timed out. Please try again.");
+    balanceOf: async function (address) {
+        const reqBody = {
+            "_tokenholder": address
         }
+        const { balance } = await paymentMicroservice.get('/balanceOf', reqBody);
+        return(parseInt(balance, 16) / Math.pow(10, 18));
     },
 
-    balanceOf: async function (user) {
-        console.log(user);
-        userBalance = await paymentMicroservice.get('/balanceOf', user);
-        console.log(userBalance);
-    }
+    transferFrom: async function transferFunds(sender, recipient, amount) {
+        const funds = (amount*Math.pow(10, 18)).toString(16);
+        const transferBody = {
+          "_from": sender,
+          "_to": recipient,
+          "_value": funds
+        }
+        try {
+          console.log('transfering funds now');
+          await paymentMicroservice.post('/transferFrom', transferBody);
+          console.log('transferring funds complete');
+        }
+        catch(err) {
+          console.log(err);
+        }
+       },
 }
 
 module.exports = paymentService;

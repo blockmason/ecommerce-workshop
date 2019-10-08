@@ -70,9 +70,10 @@ App = {
     }
   ],
   walletMapping: {
-    'Drake': '0xfe54015db0b55ac8a3ce66f5187772c47911d8a3'.toLowerCase(),
-    'Bianca': '0xfe54015db0b55ac8a3ce66f5187772c47911d8a3'.toLowerCase(),
-    'Harish': '0xfe54015db0b55ac8a3ce66f5187772c47911d8a3'.toLowerCase()
+    'Drake': '0xc1b63e1bb4aedfbce9cf44316e7738f086d33219'.toLowerCase(),
+    'Bianca': '0x83fe96cdd189e4f3c965f37309e1597a8e76aae2'.toLowerCase(),
+    'Harish': '0xfe54015db0b55ac8a3ce66f5187772c47911d8a3'.toLowerCase(),
+    'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
   init: function () {
     this.printProducts();
@@ -146,13 +147,25 @@ App = {
   userWallet: function (user) {
     return this.walletMapping[user];
   },
-  makePurchase: function(){
-
+  makePurchase: function(sender, recipient, amount){
+    paymentService.transferFrom(sender, recipient, amount)
+    //TODO record purchase
   },
-  purchase: function(productPrice, productID){
+  purchase: async function(productPrice, productID){
     user = this.userWallet(this.currentUser());
-    paymentService.balanceOf(user);
-    // paymentService.transfer(productPrice);
+    if( user == NaN || user == undefined ){
+      alert('Not logged in');
+      return;
+    }
+    store = this.userWallet('STORE');
+    amountInWallet = await paymentService.balanceOf(user);
+    if (amountInWallet < productPrice){
+      alert("You Don't Have Enough Money");
+      return;
+    }
+    alert('Thanks for shopping.');
+    this.makePurchase(user, store, productPrice, productID)
+    //TODO make front end change
   },
 }
 

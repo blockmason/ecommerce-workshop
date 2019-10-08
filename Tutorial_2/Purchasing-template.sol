@@ -13,15 +13,14 @@ contract Purchasing {
     }
     
     function addProduct(string memory product, uint addQuantity) public {
-        productList[product].quantity += addQuantity;
+        //TODO
     }
     
     function purchaseProduct(string memory product, address purchaser) public returns (uint purchaserslength) {
-        require(productList[product].purchasers.length < productList[product].quantity);
-        productList[product].purchasers.push(purchaser);
+        //TODO
     }
     
     function getPurchasers(string memory product) public view returns (address[] memory purchasers) {
-        return productList[product].purchasers;
+        //TODO
     }
 }

@@ -28,4 +28,4 @@ Tokens are specific to a network and this also applies between test and mainnet 
 
 2. Confirm you have received the testnet GO tokens by searching your Link account wallet address with the GoChain testnet block explorer: https://testnet-explorer.gochain.io/ . 
 
-Now you are all setup with Link and some test tokens!
+Now you are all setup with Link and some test tokens and ready to proceed with the next tutorial!

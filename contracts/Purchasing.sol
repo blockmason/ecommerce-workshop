@@ -16,7 +16,7 @@ contract Purchasing {
         productList[product].quantity += addQuantity;
     }
     
-    function purchaseProduct(string memory product, address purchaser) public returns (uint purchaserslength) {
+    function purchaseProduct(string memory product, address purchaser) public {
         require(productList[product].purchasers.length < productList[product].quantity);
         productList[product].purchasers.push(purchaser);
     }

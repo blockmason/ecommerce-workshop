@@ -31,7 +31,6 @@ module.exports = {
     },
 
     readCommentsInMemory: function() {
-        console.log(this.commentsInMemory);
         return this.commentsInMemory;
     }
 }

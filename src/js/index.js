@@ -84,6 +84,7 @@ App = {
     $('#' + product.id).find('.company-name').text(product.companyName);
     $('#' + product.id).find('.product-description').text(product.description);
     $('#' + product.id).find('.product-amount').text(product.amount);
+    $('#' + product.id).find('.product-price').text(product.price);
     $('#' + product.id).find('.comment-area').attr('id', product.id + '-comment-area');
     $('#' + product.id).find('.card-content').attr('id', product.id + '-card-content');
     $('#' + product.id).find(".post-comment").attr('id', product.id + '-comment');
@@ -100,8 +101,9 @@ App = {
     newProductCompany = $("#new-product-company").val();
     newProductDescription = $("#new-product-description").val();
     newProductAmount = $("#new-product-amount").val();
+    newProductPrice = $("#new-product-price").val();
     newProductID = newProductName.replace(/\s/g, '');
-    newProduct = { name: newProductName, id: newProductID, picture: newProductImage, description: newProductDescription, companyName: newProductCompany, amount: newProductAmount }
+    newProduct = { name: newProductName, id: newProductID, picture: newProductImage, description: newProductDescription, companyName: newProductCompany, amount: newProductAmount, price: newProductPrice }
     this.createProduct(newProduct);
   },
   storeNewComment: async function (commentText, ID) {
@@ -111,7 +113,7 @@ App = {
   },
   postComment: async function (commentID) {
     let commentText = $('#' + commentID + '-comment-area');
-    if(commentText.val().trim() == '') return;
+    if (commentText.val().trim() == '') return;
     this.createComment(commentText.val().trim(), commentID);
     await this.storeNewComment(commentText.val().trim(), commentID);
     $('#' + commentID + '-comment-area').val('')
@@ -123,10 +125,10 @@ App = {
     let lastComment = $('#' + commentID).find('.comment:last');
     commentTemplate.insertBefore(lastComment);
   },
-  loadComments: async function() {
+  loadComments: async function () {
     await commentsService.getComments();
     let commentArray = commentsService.readCommentsInMemory();
-    for(i = 0; i <= commentArray.length; i++) {
+    for (i = 0; i <= commentArray.length; i++) {
       this.createComment(commentArray[i].comment, commentArray[i].asset);
     }
   },

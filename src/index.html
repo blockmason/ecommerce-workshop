@@ -133,6 +133,8 @@
                                 <p class="title is-4 product-name">Product Name</p>
                                 <p class="subtitle is-6 company-name">By Company</p>
                                 <p class="subtitle is-7"><span class="product-amount">6</span> in stock</p>
+                                <p class="subtitle is-4 has-text-primary has-text-weight-semibold">$<span
+                                        class="product-price">6</span>.99</p>
                             </div>
                             <div class="buttons">
                                 <div class="button has-background-warning has-text-black">
@@ -154,16 +156,22 @@
                         </article>
                         <section class="previous-comments">
                             <article class="message is-warning comment is-hidden">
-                                    <div class="message-body">
-                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
-                                    </div>
+                                <div class="message-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus
+                                        mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex
+                                    sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a>
+                                    efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu
+                                    et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque.
+                                    Donec dui urna, vehicula et sem eget, facilisis sodales sem.
+                                </div>
                             </article>
                         </section>
                         <article class="media">
                             <div class="media-content">
                                 <div class="field">
                                     <p class="control">
-                                        <textarea class="textarea comment-area" placeholder="Add a comment..."></textarea>
+                                        <textarea class="textarea comment-area"
+                                            placeholder="Add a comment..."></textarea>
                                     </p>
                                 </div>
                                 <div class="field">
@@ -232,6 +240,20 @@
                         <input id="new-product-amount" class="input" type="text" placeholder="12">
                     </div>
 
+                </div>
+                <div class="field has-addons">
+                    <p class="control">
+                        <span class="select">
+                            <select>
+                                <option>$</option>
+                                <option>£</option>
+                                <option>€</option>
+                            </select>
+                        </span>
+                    </p>
+                    <p class="control">
+                        <input class="input" id="new-product-price" type="text" placeholder="Price">
+                    </p>
                 </div>
             </section>
             <footer class="modal-card-foot">

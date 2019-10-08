@@ -89,6 +89,9 @@ App = {
     $('#' + product.id).find('.card-content').attr('id', product.id + '-card-content');
     $('#' + product.id).find(".post-comment").attr('id', product.id + '-comment');
     $('#' + product.id).find(".product-image").attr("src", product.picture);
+    $(".post-comment").click(function () {
+      App.postComment($('#' + this.id).closest(".column").attr('id'));
+    })
   },
   printProducts: function () {
     for (i = 0; i < this.store.length; i++) {
@@ -113,6 +116,7 @@ App = {
   },
   postComment: async function (commentID) {
     let commentText = $('#' + commentID + '-comment-area');
+    console.log(commentText);
     if (commentText.val().trim() == '') return;
     this.createComment(commentText.val().trim(), commentID);
     await this.storeNewComment(commentText.val().trim(), commentID);
@@ -143,7 +147,4 @@ App = {
 
 $(window).on('load', function () {
   App.init();
-  $(".post-comment").click(function () {
-    App.postComment($('#' + this.id).closest(".column").attr('id'));
-  })
 });

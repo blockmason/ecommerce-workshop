@@ -2,35 +2,47 @@ const { link } = require('@blockmason/link-sdk');
 
 // Purchse Service API
 const purchaseMicroservice = link({
-    clientId: '',
-    clientSecret: ''
+    clientId: 'Miko76KUQlRlqcV8S-rYlw2m_MkFDt9HWLaidl3OGp4',
+    clientSecret: 'oH+ScLTgaM+jLil+szLnRwYZPk9MPm585h9glUA9ZDXfRL8O4tOpmqxnSyMmrqx'
 });
 
 module.exports = {
-    addProduct: function(product, quantity) {
+    addProduct: async function (product, quantity, url, description, price, company, id) {
         const reqBody = {
-            "product": product,
-            "addQuantity": quantity
+            "product": product.toString(),
+            "addQuantity": quantity.toString(),
+            "url": url.toString(),
+            "description": description.toString(),
+            "price": price.toString(),
+            "company": company.toString(),
+            "id": id.toString(),
         };
-        return purchaseMicroservice.post('/addProduct', reqBody);
+        return await purchaseMicroservice.post('/addProduct', reqBody);
     },
 
-    purchaseProduct: function(product, buyerAddress) {
+    purchaseProduct: async function (product, buyerAddress) {
         const reqBody = {
             "product": product,
             "purchaser": buyerAddress
         };
-        return purchaseMicroservice.post('/purchaseProduct', reqBody);
+        return await purchaseMicroservice.post('/purchaseProduct', reqBody);
     },
 
-    getPurchasers: function(product) {
+    getPurchasers: async function (product) {
         const reqBody = {
             "product": product
         };
-        return purchaseMicroservice.get('/getPurchasers', reqBody);
+        console.log('getting purchasers...');
+        purchasers = await purchaseMicroservice.get('/getPurchasers', reqBody);
+        console.log(purchasers, 'done...');
     },
 
-    getAuthority: function() {
+    getAuthority: function () {
         return purchaseMicroservice.get('/authority');
+    },
+
+    getProducts: async function () {
+        productList = await purchaseMicroservice.get('/events/Product');
+        return productList.data
     }
 }

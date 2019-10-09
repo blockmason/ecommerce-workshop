@@ -87,7 +87,6 @@ App = {
   },
   makePurchase: function (buyer, seller, amount, productID) {
     paymentService.transferFrom(buyer, seller, amount)
-    //TODO record purchase
     purchaseService.purchaseProduct(productID, buyer);
   },
   purchase: async function (productPrice, productID) {
@@ -105,6 +104,7 @@ App = {
     alert('Thanks for shopping.');
     this.makePurchase(user, store, productPrice, productID)
     //TODO make front end change
+    $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
   },
 }
 

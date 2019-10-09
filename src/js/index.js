@@ -103,7 +103,6 @@ App = {
     }
     alert('Thanks for shopping.');
     this.makePurchase(user, store, productPrice, productID)
-    //TODO make front end change
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
   },
 }

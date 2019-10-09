@@ -21,8 +21,8 @@ App = {
     $('#' + product.id).find('.product-name').text(product.product);
     $('#' + product.id).find('.company-name').text(product.company);
     $('#' + product.id).find('.product-description').text(product.description);
-    $('#' + product.id).find('.product-amount').text(product.quantity);
-    $('#' + product.id).find('.product-price').text(product.price).data('price', product.price).data('productID', product.id);
+    $('#' + product.id).find('.product-amount').text(parseInt(product.quantity, 16));
+    $('#' + product.id).find('.product-price').text(product.price).data('price', product.price).data('productID', product.product);
     $('#' + product.id).find('.comment-area').attr('id', product.id + '-comment-area');
     $('#' + product.id).find('.card-content').attr('id', product.id + '-card-content');
     $('#' + product.id).find(".post-comment").attr('id', product.id + '-comment');

@@ -21,11 +21,15 @@ module.exports = {
     },
 
     purchaseProduct: async function (product, buyerAddress) {
+        console.log(product);
+        console.log(buyerAddress);
         const reqBody = {
             "product": product,
             "purchaser": buyerAddress
         };
-        return await purchaseMicroservice.post('/purchaseProduct', reqBody);
+        await purchaseMicroservice.post('/purchaseProduct', reqBody);
+        console.log('purchase complete!')
+        return;
     },
 
     getPurchasers: async function (product) {

@@ -49,6 +49,7 @@ App = {
     newProductPrice = $("#new-product-price").val();
     newProductID = newProductName.replace(/\s/g, '');
     newProduct = { product: newProductName, id: newProductID, url: newProductImage, description: newProductDescription, company: newProductCompany, quantity: newProductAmount, price: newProductPrice }
+    $( '.modal' ).removeClass('is-active');
     this.createProduct(newProduct);
     purchaseService.addProduct(newProductName, newProductAmount, newProductImage, newProductDescription, newProductPrice, newProductCompany, newProductID);
   },

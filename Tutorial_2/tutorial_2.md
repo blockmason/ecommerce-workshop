@@ -1,15 +1,15 @@
-# Create, Deploy and Interact with a Smart Contracts
-Goal: Creating a 'purchasing' smart contract and deploy it to the blockchain. 
+# Create, Deploy and Interact with Smart Contracts
+Goal: Creating a 'purchasing' and custom token smart contracts and deploy them to the blockchain. 
 
 ### Create a Smart Contract
 Smart contracts are essentially lines of code which control the execution of a transaction between blockchain accounts based on events. Smart contracts are regarded as self-executing and intended to avoid the need of intermediaries or 3rd parties.
 
-We will use the Solidity(https://solidity.readthedocs.io/en/latest/) programming language throughout these tutorials to program Ethereum-blockchain compatible smart contracts. 
+We will use the Solidity (https://solidity.readthedocs.io/en/latest/) programming language throughout these tutorials to program Ethereum-blockchain compatible smart contracts. 
 
-Solidity has influences from C++, Python and JavaScript and you'll see some of the similar syntax used in the following examples. 
+Solidity has influences from C++, Python and JavaScript and you will see some of the similar syntax used in the following examples. 
 
 #### A 'Purchasing' Smart Contract
-In this series, we are going to build a simple blockchain-powered e-commerce app, where buyers are limited to only 1 of any item. 
+In this series, we are going to build a simple blockchain-powered ecommerce marketplace, where buyers are limited to only purchase 1 of any item. 
 
 We will start with creating a basic `Purchasing` smart contract to record products, total quantity, and buyers on the blockchain.
 
@@ -18,9 +18,15 @@ We will start with creating a basic `Purchasing` smart contract to record produc
 pragma solidity ^0.5.8;
 
 contract Purchasing {
+    event Product(string product, uint quantity, string url, string price, string description, string company, string id);
     struct ProductDetails {
         uint quantity;
         address[] purchasers;
+        string url;
+        string description;
+        string price;
+        string company;
+        string id;
     }
     mapping(string => ProductDetails) public productList;
     address public authority;
@@ -33,24 +39,46 @@ contract Purchasing {
 }
 ```
 Things to note:
-* A `struct` is custom defined object type which can group together different types of variables. In this contract, we have a `ProductDetails` custom object which contains the `quantity` and and array of `purchasers` of a specific product.
+* A `struct` is custom defined object type which can group together different types of variables. In this contract, we have a `ProductDetails` custom object which contains a bunch of variables defining the various attributes of the product.
+
+* Events are inheritable members of contracts. When you call them, they cause the arguments to be stored in the transaction’s log - a special data structure in the blockchain. We can access these events from a tool like Blockmason Link. To trigger an event, we use the `emit` keyword followed by the event class. 
 
 * The product details are mapped to a product in the `productList` mapping object, which can be publicly accessed.
 
 * The `authority` of this smart contract will be the address which deploys the contract (i.e. `msg.sender`). When deploying a contract using Blockmason Link, the Link default account is the deploying address and will thus be the contract `authority`. 
 
-* There are 3 functions to finish the code for: `#addProduct()`, `#purchaseProduct()`, and `#getPurchasers()`. 
+* The functions to complete the code for are: `#addProduct()`, `#addProductQuantity()`, `#purchaseProduct()`, and `#getPurchasers()`. 
 
 ##### #addProduct()
 ```
-function addProduct(string memory product, uint addQuantity) public {
+function addProduct(string memory product, uint addQuantity, string memory url, string memory description, string memory price, string memory company, string memory id) public {
     //TODO
 }
 ```
-> Here, we just need to add our product and quantity to the `productList` mapping. We want the quantity added to be cumulative, and not override any existing quantity value. 
+> This is the most involved function out of the list, but is still relatively quite simple. We just need to add our arguments to the corresponding `product` name in the `productList` mapping. We complete the function with emitting the Product event. 
 
 ```
-function addProduct(string memory product, uint addQuantity) public {
+function addProduct(string memory product, uint addQuantity, string memory url, string memory description, string memory price, string memory company, string memory id) public {
+    productList[product].quantity = addQuantity;
+    productList[product].url = url;
+    productList[product].price = description;
+    productList[product].description = price;
+    productList[product].company = company;
+    productList[product].id = id;
+    emit Product(product, addQuantity, url, price, description, company, id);
+}
+```
+##### #addProductQuantity()
+```
+function addProductQuantity(string memory product, uint addQuantity) public {
+    //TODO
+}
+```
+> Here we want to add quantity to an existing product so we need to first check that the product exists in the `productList` before cumulatively adding the quantity. We will use the `require()` Solidity keyword to check for this requirement first.
+
+```
+function addProductQuantity(string memory product, uint addQuantity) public {
+    require(productList[product], 'Need to addProduct first');
     productList[product].quantity += addQuantity;
 }
 ```
@@ -61,7 +89,9 @@ function getPurchasers(string memory product) public view returns (address[] mem
     //TODO
 }
 ```
+
 > Here, we simply need to return the `purchasers` array for a particular `product` from the `productList`:
+
 ```
 function getPurchasers(string memory product) public view returns (address[] memory purchasers) {
     return productList[product].purchasers;
@@ -76,7 +106,7 @@ function purchaseProduct(string memory product, address purchaser) public {
 ```
 
 > Here we need to do 2 things:
-> 1. First check if there is product available for purchase. Since each buyer is limited to 1 of any item, we can simply check that the `quantity` is greater than the length of the `purchasers` array. We will use the `require()` Solidity keyword to check for this requirement first. 
+> 1. First check if there is product available for purchase. Since each buyer is limited to 1 of any item for our example, we can simply check that the `quantity` is greater than the length of the `purchasers` array. We will use the `require()` Solidity keyword to check for this requirement first. 
 
 > 2. Add the buyer to the `purchasers` array for the product. 
 
@@ -88,8 +118,7 @@ function purchaseProduct(string memory product, address purchaser) public {
 ```
 > See the completed smart contract code in: https://github.com/blockmason/ecommerce-workshop/blob/master/contracts/Purchasing.sol
 
-
-### Deploy a Smart Contract using Blockmason Link
+### Deploy the Purchasing Smart Contract using Blockmason Link
 The process for connecting and interacting with external blockchains using Link is relatively straightforward using the Link Project Wizard. In general, the process flow looks something like this:
 
 ![Link public blockchain setup flow](images/Link_public_blockchain_flow.png)
@@ -158,13 +187,52 @@ Let us also double check that our Purchasing contract deployed successfully on t
 
 > Copy and paste this address into the selected blockchain's explorer to see the details of your contract deployment.
 
-**Congrats! You have successfully deployed your smart contract to the blockchain!** In the next Tutorial, we will interact with the deployed contract using our Link APIs. 
+**Congrats! You have successfully deployed your first smart contract to the blockchain!** 
 
+### Deploy your custom token Smart Contract
 
+Following the same steps as before, we will now deploy a custom token which will be used 'under the hood' in our ecommerce marketplace app. 
 
+> In `contracts/`, open up `BasicToken.sol`. Note this is a simplified contract adapted from the the ERC20 standard token contract (you can read more about the Ethereum token standard here: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)
 
+There are only a few customizations you need to do to this contract before deploying it:
+```
+//Change the contract name to your token name
+contract BasicToken {
+    // Name your custom token
+    string public constant name = "Basic Token";
 
+    // Set your custom token symbol
+    string public constant symbol = "BASIC";
+```
 
+> Replace `Basic` in the contract definition *and* the public constant `name` variable. 
 
+> Then replace the `BASIC` token symbol with your custom symbol. This will be the token ticker symbol. 
 
+> And then down in the `constructor() public {...` , customize the following lines:
+```
+// Add your wallet address here which will contain your total token supply
+treasury = address(<some address>);
 
+// Use the following for the treasury if you want the Link default account to be the treasury
+// treasury = msg.sender;
+
+// Set your total token supply (default 1000)
+totalSupply = 1000 * 10**uint(decimals);
+```
+
+> So for example if you want to use a custom wallet address, such as `0xFeE9813A4B268793D4Edc6DF11A760C3c07a2c98` as your treasury wallet holding all the custom tokens you will mint, simply change the above line to:
+```
+treasury = address(`0xFeE9813A4B268793D4Edc6DF11A760C3c07a2c98`);
+```
+
+> If you want to use the Link default account as the treasury, delete `treasury = address(<some address>);` and uncomment `treasury = msg.sender;`. 
+
+> Lastly, change the `1000` supply figure to your desired supply amount. 
+
+**Your custom token contract is ready to go!** Follow the previous deployment steps in Blockmason Link to deploy the custom token contract. 
+
+Use the blockchain explorer to confirm you have successfully deployed your token contract. 
+
+In the next tutorial, we will use our Link APIs to interact with both the `Purchasing.sol` and `CustomToken.sol` smart contracts. 

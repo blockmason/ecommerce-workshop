@@ -28,12 +28,13 @@ contract Purchasing {
         emit Product(product, addQuantity, url, price, description, company, id);
     }
 
-       function addProductQuantity(string memory product, uint addQuantity) public {
+    function addProductQuantity(string memory product, uint addQuantity) public {
+        require(productList[product], 'Need to addProduct first');
         productList[product].quantity += addQuantity;
     }
     
     function purchaseProduct(string memory product, address purchaser) public {
-        require(productList[product].purchasers.length < productList[product].quantity,  "Sender not authorized.");
+        require(productList[product].purchasers.length < productList[product].quantity,  "Unable to purchase. Insufficient quantity");
         productList[product].purchasers.push(purchaser);
     }
     

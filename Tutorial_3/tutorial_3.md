@@ -25,6 +25,15 @@ npm install node-fetch
 ```
 ### Interact with the Link APIs
 
+Interacting with your smart contracts through the Link APIs is easy thanks to the Blockmason Link SDK installed previously.
 
+Let's break down the components of making a Link API request through the SDK.
 
+Here is an example:
 
+```
+    getProducts: async function () {
+        productList = await purchaseMicroservice.get('/events/Product');
+        return productList.data
+    }
+```

@@ -13,7 +13,7 @@ Once we have our front-end set up, we can pull each service together in the ```i
 
 ## Front-End Breakdown
 
-Instead of breaking down the entire ```index.html``` and ```index.js``` files let's take a look at some of the general concepts behind these files.
+Instead of breaking down the entire ```index.html``` and ```index.js``` files let's take a look at some of the general concepts behind these files and the way they interact.
 
 The core piece of the ```index.html``` file that we interact with is the product template. Inside the product template we create and store most of our data. The bulk of the DOM manipulation is achieved through the JavaScript library Jquery. on the ```index.js``` side whenever you see ```$('something in here)``` that is using the Jquery library.
 
@@ -26,3 +26,18 @@ The next key action is purchasing a product. When a user clicks the 'Buy Now' bu
 Products are generated on the front-end by retrieving an array of product data that has been stored on the blockchain. The appropriate data is then distributed on a unique copy of the product template including images, description, and price, and then displayed on the page as a product card. More products can be added by using filling in the "add new product" form. Once submitted the data in the form is sent through the Purchase service to the blockchain to be added to the list of products available.
 
 Finally customers can leave comments and reviews on specific products. When a comment is submitted, in the ```index.js``` file using Jquery we can retrieve the text that has been submitted, and the id of the product that the comment is associated with. This data is then sent using the Comments service to the Link API and finally recorded on the blockchain. All the appropriate comments are retrieved from the blockchain when the page loads and displayed.
+
+## Application Overview
+
+Now that we have the front-end and microservices figured out let's take a look at how they all tie together. It's pretty easy to follow: Each microservice acts independently from the other services and from the front-end. This means that the service can be transported to other applications with ease (say if you wanted to build a mobile app instead). The ```index.js``` file then acts as the glue that ties the interactions of each microservice and the front-end HTML together. This keeps the front-end independent from each individual component, and will make it easier to add new features in the future.
+
+*The flow of interactions looks something like this:*
+
+```index.html``` <-----> ```index.js``` <-----> Payment Service
+
+```index.html``` <-----> ```index.js``` <-----> Purchase Service
+
+```index.html``` <-----> ```index.js``` <-----> Comment Service
+
+## Let's get it running!
+

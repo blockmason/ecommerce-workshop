@@ -173,29 +173,3 @@ you will see an output like:
 **Congrats! You have succesfully interacted with your smart contract using web APIs through Link!**
 
 In the next tutorial, we will create microservices, which will be short, concise javascript files running one specific service, which will then be used by our front-end ecommerce marketplace app. 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-Interacting with your smart contracts through the Link APIs is easy thanks to the Blockmason Link SDK installed previously.
-
-Let's break down the components of making a Link API request through the SDK.
-
-Here is an example:
-
-```
-    getProducts: async function () {
-        productList = await purchaseMicroservice.get('/events/Product');
-        return productList.data
-    }
-```

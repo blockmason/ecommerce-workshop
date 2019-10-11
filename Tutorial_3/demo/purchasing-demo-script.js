@@ -20,10 +20,19 @@ async function addProduct(product, addQuantity, url, description, price, company
     "id": id
   }
     
-  const response = await project.post('/addProduct', reqBody);
-  console.log('POST /addProduct called with request data ', reqBody);
+  await project.post('/addProduct', reqBody);
+}
+
+async function addProductQuantity(product, quantity) {
+  const reqBody = {
+    "product": product,
+    "addQuantity": quantity
+  }
+  
+  const response = await project.post('/addProductQuantity', reqBody);
+  console.log('POST /addProductQuantity called with request data ', reqBody);
   if (response.errors) {
-    console.log('Error adding Product. Check all product parameters passed');
+    console.log('Error with adding quantity of ', quantity, '. Check that product exists!');
   }
 }
 
@@ -37,19 +46,6 @@ async function purchaseProduct(product) {
   console.log('POST /purchaseProduct called with request data ', reqBody);
   if (response.errors) {
     console.log('Error with purchasing product. Check that product and sufficient quantity exists');
-  }
-}
-
-async function addProductQuantity(product, quantity) {
-  const reqBody = {
-    "product": product,
-    "addQuantity": quantity
-  }
-  
-  const response = await project.post('/addProductQuantity', reqBody);
-  console.log('POST /addProductQuantity called with request data ', reqBody);
-  if (response.errors) {
-    console.log('Error with adding quantity of ', quantity, '. Check that product exists');
   }
 }
 
@@ -67,7 +63,7 @@ async function getProducts() {
   console.log('Products are: ', result);
 }
 
-// Test APIs
+// Set test product
 const item = "yellow_tie";
 const id = 'yellowtie';
 const addQuantity = 3;
@@ -76,17 +72,12 @@ const description = 'Nice bright yellow tie';
 const price = '$89.99';
 const company = 'gucci';
 
+// Function Calls
+
 // addProduct(item, addQuantity, url, description, price, company, id);
-
-addProductQuantity(item, 2);
-
-// getProductDetails(item);
-
-// getErrors();
-
-// getProducts();
-
-// getAuthority();
-
+// addProductQuantity(item, 2);
 // purchaseProduct(item);
+// getProductDetails(item);
+getProducts();
+
 

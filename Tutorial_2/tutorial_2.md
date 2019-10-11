@@ -185,6 +185,8 @@ Also, by clicking on the `Code/API` toggle, you will see the full list of availa
 
 ![Link API Setup Completed APIs](images/link_api_setup_endpoints.png)
 
+**Note: All calls to these API endpoints must be made asynchronously!**
+
 Let us also double check that our Purchasing contract deployed successfully on the blockchain. 
 
 >Click on the `Ethereum Contract Deployments` menu item to see a list of contract deployments and their addresses. In the following example, the contract deployment address is `0x3ea042fa32f731422d6147bb31515395413986c6`

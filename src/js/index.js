@@ -3,7 +3,6 @@ const commentsService = require('./comments-service.js');
 const purchaseService = require('./purchase-service.js');
 
 App = {
-  // this will be replaced
   store: [],
   walletMapping: {
     'Drake': '0xc1b63e1bb4aedfbce9cf44316e7738f086d33219'.toLowerCase(),

@@ -10,6 +10,7 @@ contract Purchasing {
         string price;
         string company;
         string id;
+        bool isValue;
     }
     mapping(string => ProductDetails) public productList;
     address public authority;
@@ -21,15 +22,16 @@ contract Purchasing {
     function addProduct(string memory product, uint addQuantity, string memory url, string memory description, string memory price, string memory company, string memory id) public {
         productList[product].quantity = addQuantity;
         productList[product].url = url;
-        productList[product].price = description;
-        productList[product].description = price;
+        productList[product].price = price;
+        productList[product].description = description;
         productList[product].company = company;
         productList[product].id = id;
+        productList[product].isValue = true;
         emit Product(product, addQuantity, url, price, description, company, id);
     }
 
     function addProductQuantity(string memory product, uint addQuantity) public {
-        require(productList[product], 'Need to addProduct first');
+        require(productList[product].isValue, 'Need to addProduct first');
         productList[product].quantity += addQuantity;
     }
     

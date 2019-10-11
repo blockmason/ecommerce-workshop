@@ -10,7 +10,7 @@ contract Purchasing {
         string price;
         string company;
         string id;
-        bool isValue;
+        bool isSet;
     }
     mapping(string => ProductDetails) public productList;
     address public authority;
@@ -26,17 +26,17 @@ contract Purchasing {
         productList[product].description = description;
         productList[product].company = company;
         productList[product].id = id;
-        productList[product].isValue = true;
+        productList[product].isSet = true;
         emit Product(product, addQuantity, url, price, description, company, id);
     }
 
     function addProductQuantity(string memory product, uint addQuantity) public {
-        require(productList[product].isValue, 'Need to addProduct first');
+        require(productList[product].isSet);
         productList[product].quantity += addQuantity;
     }
     
     function purchaseProduct(string memory product, address purchaser) public {
-        require(productList[product].purchasers.length < productList[product].quantity,  "Unable to purchase. Insufficient quantity");
+        require(productList[product].purchasers.length < productList[product].quantity); 
         productList[product].purchasers.push(purchaser);
     }
     

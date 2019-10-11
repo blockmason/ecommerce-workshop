@@ -20,8 +20,11 @@ async function addProduct(product, addQuantity, url, description, price, company
     "id": id
   }
     
-  await project.post('/addProduct', reqBody);
+  const response = await project.post('/addProduct', reqBody);
   console.log('POST /addProduct called with request data ', reqBody);
+  if (response.errors) {
+    console.log('Error adding Product. Check all product parameters passed');
+  }
 }
 
 async function purchaseProduct(product) {
@@ -30,17 +33,10 @@ async function purchaseProduct(product) {
     "purchaser": "0xaFf485B0dd5D2c2851FDf374D488379F75403663"
   }
   
-  const originalErrors = await getErrors();
-  try {
-    await project.post('/purchaseProduct', reqBody);
-    console.log('POST /purchaseProduct called with request data ', reqBody);
-    const newErrors = await getErrors();
-    if (newErrors.length > originalErrors.length && newErrors[newErrors.length-1]["product"] == product) {
-      console.log('Error with purchasing product: ', newErrors[newErrors.length-1]["errorMsg"]);
-    }
-  }
-  catch (err) {
-    console.log('Error with POST request ', err);
+  const response = await project.post('/purchaseProduct', reqBody);
+  console.log('POST /purchaseProduct called with request data ', reqBody);
+  if (response.errors) {
+    console.log('Error with purchasing product. Check that product and sufficient quantity exists');
   }
 }
 
@@ -50,12 +46,10 @@ async function addProductQuantity(product, quantity) {
     "addQuantity": quantity
   }
   
-  try {
-    await project.post('/addProductQuantity', reqBody);
-    console.log('POST /addProductQuantity called with request data ', reqBody);
-  }
-  catch(err) {
-    console.log('Error with adding Product Quantity', err);
+  const response = await project.post('/addProductQuantity', reqBody);
+  console.log('POST /addProductQuantity called with request data ', reqBody);
+  if (response.errors) {
+    console.log('Error with adding quantity of ', quantity, '. Check that product exists');
   }
 }
 
@@ -68,32 +62,23 @@ async function getProductDetails(product) {
   console.log('Quantity and price of product ', product, 'is:', quantity, price);
 }
 
-async function getErrors() {
-  const { data } = await project.get('/events/ErrorLog');
-  return data;
-}
-
 async function getProducts() {
   const result = await project.get('/events/Product');
   console.log('Products are: ', result);
 }
 
-async function getAuthority() {
-  const { result } = await project.get('/authority');
-  console.log('Authority is: ', result);
-}
-
-const item = "green_tie";
-const id = 'greentie';
+// Test APIs
+const item = "yellow_tie";
+const id = 'yellowtie';
 const addQuantity = 3;
 const url = '';
-const description = 'Nice bright blue tie';
+const description = 'Nice bright yellow tie';
 const price = '$89.99';
 const company = 'gucci';
 
 // addProduct(item, addQuantity, url, description, price, company, id);
 
-// addProductQuantity(item, 2);
+addProductQuantity(item, 2);
 
 // getProductDetails(item);
 
@@ -103,5 +88,5 @@ const company = 'gucci';
 
 // getAuthority();
 
-purchaseProduct(item);
+// purchaseProduct(item);
 

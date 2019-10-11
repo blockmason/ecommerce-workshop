@@ -20,6 +20,8 @@
   "dependencies": {
     "@blockmason/link-sdk": "^0.1.4",
     "bulma": "^0.7.5",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "parcel-bundler": "^1.12.4",
+    "parceljs": "0.0.1"
   }
 }

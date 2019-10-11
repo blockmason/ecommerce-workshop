@@ -41,3 +41,11 @@ Now that we have the front-end and microservices figured out let's take a look a
 
 ## Let's get it running!
 
+The last thing to do is get our application running.
+
+* Make sure you have installed Parcel JS from https://parceljs.org/getting_started.html
+
+Now open up your terminal and run the command ```npm start``` or alternatively ```parcel src/index.html```.
+This should start up our parcel server and run the application at ```localhost``` port ```1234```, and thats it!
+
+### Congratulations you are done!

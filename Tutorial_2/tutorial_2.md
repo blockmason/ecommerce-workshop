@@ -1,4 +1,4 @@
-# Create, Deploy and Interact with Smart Contracts
+# Create and Deploy Smart Contracts
 Goal: Creating a 'purchasing' and custom token smart contracts and deploy them to the blockchain. 
 
 ### Create a Smart Contract
@@ -13,7 +13,7 @@ In this series, we are going to build a simple blockchain-powered ecommerce mark
 
 We will start with creating a basic `Purchasing` smart contract to record products, total quantity, and buyers on the blockchain.
 
-> We start with the contract template file `Purchasing-template.sol`. 
+> We start with the contract template file `contracts/Purchasing-template.sol`. 
 ```
 pragma solidity ^0.5.8;
 
@@ -27,6 +27,7 @@ contract Purchasing {
         string price;
         string company;
         string id;
+        bool isSet;
     }
     mapping(string => ProductDetails) public productList;
     address public authority;
@@ -61,10 +62,11 @@ function addProduct(string memory product, uint addQuantity, string memory url, 
 function addProduct(string memory product, uint addQuantity, string memory url, string memory description, string memory price, string memory company, string memory id) public {
     productList[product].quantity = addQuantity;
     productList[product].url = url;
-    productList[product].price = description;
-    productList[product].description = price;
+    productList[product].price = price;
+    productList[product].description = description;
     productList[product].company = company;
     productList[product].id = id;
+    productList[product].isSet = true;
     emit Product(product, addQuantity, url, price, description, company, id);
 }
 ```
@@ -78,7 +80,7 @@ function addProductQuantity(string memory product, uint addQuantity) public {
 
 ```
 function addProductQuantity(string memory product, uint addQuantity) public {
-    require(productList[product], 'Need to addProduct first');
+    require(productList[product].isSet);
     productList[product].quantity += addQuantity;
 }
 ```
@@ -116,7 +118,7 @@ function purchaseProduct(string memory product, address purchaser) public {
     productList[product].purchasers.push(purchaser);
 }
 ```
-> See the completed smart contract code in: https://github.com/blockmason/ecommerce-workshop/blob/master/contracts/Purchasing.sol
+> See the completed smart contract code in `contracts/Purchasing.sol`. 
 
 ### Deploy the Purchasing Smart Contract using Blockmason Link
 The process for connecting and interacting with external blockchains using Link is relatively straightforward using the Link Project Wizard. In general, the process flow looks something like this:
@@ -178,6 +180,10 @@ Let us now deploy the `Purchasing.sol` smart contract to the blockchain.
 Once you hit *`Finish`*, you should end up back at Home page and see your Purchasing code in the code editor, the API tab and a gear icon which toggles the `client_id` and `client_secret` auth credentials at the bottom of the page. You will use these credentials to interact with you newly created APIs!
 
 ![Link API Setup Completed](images/link_api_setup_completed.png)
+
+Also, by clicking on the `Code/API` toggle, you will see the full list of available API endpoints generated from the smart contract code:
+
+![Link API Setup Completed APIs](images/link_api_setup_endpoints.png)
 
 Let us also double check that our Purchasing contract deployed successfully on the blockchain. 
 

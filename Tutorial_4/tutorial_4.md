@@ -3,15 +3,26 @@ Goal: To create the JavaScript that will interact with our Smart Contracts using
 
 ## What microservices do we need?
 
-#### Payments Service
-#### Purchase Service
-#### Comments Service
+### Payments Service
+Simplest explanation: The payment microservice controls the transfer of funds from a purchaser to a seller when a product is bought.
+
+In-depth explanation: The payment microservice creates an intermediary that represents real-world value and mints a number of these tokens storing them in a specified treasury. From the treasury the tokens can then be transferred to and between customer held wallets.
+
+In this use-case we use these tokens instead of using a credit card.
+
+### Purchase Service
+The purchase microservice controls the creation and storage of products (including the details of those products), the addition of product inventory, and it records which products are bought and by whom.
+
+### Comments Service
+The Comments microservice records customer comments, the associated product ID, and can retrieve product comments whenever they are needed.
 
 ---
 ## Microservice Smart Contracts
 
 ### Creating the contracts
 In the previous tutorial we worked with Smart Contracts. Now that we are familiar we need to create individual Smart Contracts for each microservice we will be running in our application.
+
+*- NOTE: please refer to the .sol files for full details on each contract.*
 
   #### Payments Smart Contract
 Let's take a look at what this contract consists of:
@@ -56,7 +67,6 @@ Then we want to set your custom token symbol
         balances[treasury] = totalSupply;
         emit Transfer(address(0), treasury, totalSupply);
     }
-...
 ```
 Lastly we want to add the wallet address for your treasury or we can use the default Link address. The treasury  will contain your total token supply. And then we just set your total token supply to be created *(default 1000)*.
 
@@ -143,7 +153,7 @@ contract Comments {
     }
 }
 ```
-The ```postComment``` function records the comment and data associated with that comment, which can later be retrieved with the API end point ```/events/Comment```. 
+The ```postComment``` function records the comment and data associated with that comment, which can later be retrieved with the API end point ```/events/Comment```.
 
 ---
 

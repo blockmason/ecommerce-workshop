@@ -60,9 +60,72 @@ Then we want to set your custom token symbol
 ```
 Lastly we want to add the wallet address for your treasury or we can use the default Link address. The treasury  will contain your total token supply. And then we just set your total token supply to be created *(default 1000)*.
 
-- Purchase Smart Contract
+#### Purchase Smart Contract
+Now let's see what we need for the purchase microservice smart contract. We have already covered most of the purchasing Smart Contract in tutorial 3, but here is a brief summary...
 
-- Comments Smart Contract
+The data for each product object are mapped to keys like these:
+
+```
+contract Purchasing {
+    event Product(string product, uint quantity, string url, string price, string description, string company, string id);
+    struct ProductDetails {
+        uint quantity;
+        address[] purchasers;
+        string url;
+        string description;
+        string price;
+        string company;
+        string id;
+        bool isSet;
+    }
+```
+
+You can add new products with this function
+
+```
+    function addProduct(string memory product, uint addQuantity, string memory url, string memory description, string memory price, string memory company, string memory id) public {
+        productList[product].quantity = addQuantity;
+        productList[product].url = url;
+        productList[product].price = price;
+        productList[product].description = description;
+        productList[product].company = company;
+        productList[product].id = id;
+        productList[product].isSet = true;
+        emit Product(product, addQuantity, url, price, description, company, id);
+    }
+```
+
+You can increase the quantity of a product that already exists with this function
+
+```
+    function addProductQuantity(string memory product, uint addQuantity) public {
+        require(productList[product].isSet);
+        productList[product].quantity += addQuantity;
+    }
+```
+
+When a product is purchased you would want to call this function to record that action
+
+```
+    function purchaseProduct(string memory product, address purchaser) public {
+        require(productList[product].purchasers.length < productList[product].quantity);
+        productList[product].purchasers.push(purchaser);
+    }
+```
+
+And finally, you can get a list of purchasers for each product with this function
+
+```
+    function getPurchasers(string memory product) public view returns (address[] memory purchasers) {
+        return productList[product].purchasers;
+    }
+}
+```
+
+#### Comments Smart Contract
+The last Smart Contract we need to create is the contract for creating and storing comments.
+
+---
 
 ### Choosing a blockchain
 There are lots of factors to consider when choosing which blockchain you want each individual microservice to be deployed to when using Link. By default we can use the Link Private Network, or we can manual choose which network we want to use. For instance we can use the Ethereum blockchain for our payments microservice, and a blockchain like GoChain for our inventory management and purchase service.

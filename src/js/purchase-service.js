@@ -6,7 +6,7 @@ const purchaseMicroservice = link({
     clientSecret: 'oH+ScLTgaM+jLil+szLnRwYZPk9MPm585h9glUA9ZDXfRL8O4tOpmqxnSyMmrqx'
 });
 
-module.exports = {
+purchaseService = {
     addProduct: async function (product, quantity, url, description, price, company, id) {
         const reqBody = {
             "product": product.toString(),
@@ -41,12 +41,10 @@ module.exports = {
         console.log(purchasers, 'done...');
     },
 
-    getAuthority: function () {
-        return purchaseMicroservice.get('/authority');
-    },
-
     getProducts: async function () {
         productList = await purchaseMicroservice.get('/events/Product');
         return productList.data
     }
 }
+
+module.exports = purchaseService;

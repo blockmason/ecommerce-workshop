@@ -6,7 +6,7 @@ const commentsMicroservice = link({
 });
 
 
-module.exports = {
+commentsService = {
     commentsInMemory: [],
 
     postComment: async function (commentText, ID) {
@@ -34,3 +34,5 @@ module.exports = {
         return this.commentsInMemory;
     }
 }
+
+module.exports = commentsService;

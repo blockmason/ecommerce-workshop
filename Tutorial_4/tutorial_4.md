@@ -125,6 +125,26 @@ And finally, you can get a list of purchasers for each product with this functio
 #### Comments Smart Contract
 The last Smart Contract we need to create is the contract for creating and storing comments.
 
+This contract is very simple. It just stores the comment string and the product ID associated with that comment. It looks something like this:
+
+```
+pragma solidity ^0.5.10;
+
+contract Comments {
+    event Comment(string asset, string comment);
+    address public authority;
+
+    constructor() public {
+        authority = msg.sender;
+    }
+
+    function postComment(string memory asset, string memory comment) public {
+        emit Comment(asset, comment);
+    }
+}
+```
+The ```postComment``` function records the comment and data associated with that comment, which can later be retrieved with the API end point ```/events/Comment```. 
+
 ---
 
 ### Choosing a blockchain

@@ -1,5 +1,5 @@
 # Microservices
-Goal: To create the JavaScript that will interact with our Smart Contracts using the Link SDK
+Goal: To create portable microservices that give our application a series of independently deployable features. We create these with JavaScript files that will interact with our Smart Contracts on the blockchain using the Link SDK.
 
 ## What microservices do we need?
 

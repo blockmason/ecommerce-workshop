@@ -1,8 +1,9 @@
 const { link } = require('@blockmason/link-sdk');
+require('dotenv').config();
 
 const commentsMicroservice = link({
-    clientId: "F8iCaGWKf2ZxafTf1MhZLuSu_SsgvDw8WEkwtf1JYw0",
-    clientSecret: "vsY5P7eDO4ljFXtx8rK8ljLFxfZ1KK1SDdns2ZceHBujmKizqNdLCwVXLj+HKtx"
+    clientId: process.env.COMMENT_CLIENT_ID,
+    clientSecret: process.env.COMMENT_CLIENT_SECRET
 });
 
 

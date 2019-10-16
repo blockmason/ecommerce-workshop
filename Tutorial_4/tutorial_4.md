@@ -249,7 +249,7 @@ const purchaseMicroservice = link({
 });
 ```
 
-
+Next, we need to add a function that will allow for the creation of new products. In the ```addProduct``` function we create an object with all the product details and use the Link SDK to send a post request to store those details.
 
 ```
 purchaseService = {
@@ -265,7 +265,11 @@ purchaseService = {
         };
         return await purchaseMicroservice.post('/addProduct', reqBody);
     },
+```
 
+We also need a function that will be called when a product is purchased. This function records which product is purchased and by whom, when a purchase is made.
+
+```
     purchaseProduct: async function (product, buyerAddress) {
         console.log(product);
         console.log(buyerAddress);
@@ -277,24 +281,18 @@ purchaseService = {
         console.log('purchase complete!')
         return;
     },
+```
 
-    getPurchasers: async function (product) {
-        const reqBody = {
-            "product": product
-        };
-        console.log('getting purchasers...');
-        purchasers = await purchaseMicroservice.get('/getPurchasers', reqBody);
-        console.log(purchasers, 'done...');
-    },
+Finally, we want to be able to retrieve all the products that we have stored on the blockchain. Using the ```getProducts``` function we can retrieve an array of products and information about these products.
 
+```
     getProducts: async function () {
         productList = await purchaseMicroservice.get('/events/Product');
         return productList.data
     }
 }
-
-module.exports = purchaseService;
 ```
+---
 ### Comments Service
 
 First we need to set up the SDK.
@@ -307,22 +305,10 @@ const commentsMicroservice = link({
 });
 ```
 
-
+The comments service is relatively simple. It consists of making a post request to store a comment about a specific product, and making a get request to retrieve all the comments.
 
 ```
 commentsService = {
-    commentsInMemory: [],
-
-    postComment: async function (commentText, ID) {
-            const reqBody = {
-                "asset": ID,
-                "comment": commentText
-            };
-            $('#' + ID + '-comment-area').val('');
-            this.storeComments(reqBody);
-            await commentsMicroservice.post('/postComment', reqBody);
-    },
-
     getComments: async function () {
         const comments = await commentsMicroservice.get('/events/Comment');
         comments.data.forEach((data) => {
@@ -333,11 +319,8 @@ commentsService = {
     storeComments: function(commentData) {
         this.commentsInMemory.push(commentData);
     },
-
-    readCommentsInMemory: function() {
-        return this.commentsInMemory;
-    }
 }
 
 module.exports = commentsService;
 ```
+Finally we need to make sure to export each of our services with ```module.exports``` so that we can import them in tutorial 5 to the ```index.js```.

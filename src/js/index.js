@@ -12,11 +12,14 @@ App = {
     'Harish': '0x9a10e85924da9fe6a12a1a30d3d07e415f2ac823'.toLowerCase(),
     'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
+  amountInWallet: 0,
   currentUser: function () {
     return $('#login-input').find('.input').val();
   },
-  userWallet: function (user) {
-    return this.walletMapping[user];
+  userWallet: async function (user) {
+    userWallet = this.walletMapping[user];
+    this.amountInWallet = await paymentService.balanceOf(userWallet);
+    return userWallet;
   },
   init: async function () {
     this.store = await purchaseService.getProducts();
@@ -117,12 +120,10 @@ App = {
       return;
     }
     store = this.userWallet('STORE');
-    amountInWallet = await paymentService.balanceOf(user);
-    if (amountInWallet < productPrice) {
+    if (this.amountInWallet < productPrice) {
       alert("You Don't Have Enough Money");
       return;
     }
-    // alert('Thanks for shopping.');
     this.payForProduct(user, store, productPrice, productID)
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
   },

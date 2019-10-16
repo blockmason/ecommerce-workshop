@@ -312,11 +312,11 @@ commentsService = {
     getComments: async function () {
         const comments = await commentsMicroservice.get('/events/Comment');
         comments.data.forEach((data) => {
-            this.storeComments(data)
+            this.addCommentsInMemory(data)
         });
     },
 
-    storeComments: function(commentData) {
+    addCommentsInMemory: function(commentData) {
         this.commentsInMemory.push(commentData);
     },
 }

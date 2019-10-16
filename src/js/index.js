@@ -4,19 +4,25 @@ const purchaseService = require('./purchase-service.js');
 
 App = {
   store: [],
+  commentsInMemory: [],
   walletMapping: {
     'Drake': '0xc1b63e1bb4aedfbce9cf44316e7738f086d33219'.toLowerCase(),
     'Bianca': '0x83fe96cdd189e4f3c965f37309e1597a8e76aae2'.toLowerCase(),
     'Harish': '0xfe54015db0b55ac8a3ce66f5187772c47911d8a3'.toLowerCase(),
     'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
-  commentsInMemory: [],
+  currentUser: function () {
+    return $('#login-input').find('.input').val();
+  },
+  userWallet: function (user) {
+    return this.walletMapping[user];
+  },
   init: async function () {
     this.store = await purchaseService.getProducts();
     this.printProducts();
-    this.loadComments();
+    this.printComments();
   },
-  createProduct: function (product) {
+  showProduct: function (product) {
     $("#template-object").clone().prependTo("#product-area").attr("id", product.id).removeClass("is-hidden");
     $('#' + product.id).find('.product-name').text(product.product);
     $('#' + product.id).find('.company-name').text(product.company);
@@ -37,7 +43,7 @@ App = {
   },
   printProducts: function () {
     for (i = 0; i < this.store.length; i++) {
-      this.createProduct(this.store[i])
+      this.showProduct(this.store[i])
     }
   },
   createNewProduct: function () {
@@ -49,15 +55,18 @@ App = {
     newProductPrice = $("#new-product-price").val();
     newProductID = newProductName.replace(/\s/g, '');
     newProduct = { product: newProductName, id: newProductID, url: newProductImage, description: newProductDescription, company: newProductCompany, quantity: newProductAmount, price: newProductPrice }
-    $( '.modal' ).removeClass('is-active');
+    this.clearProductModal();
+    this.showProduct(newProduct);
+    purchaseService.addProduct(newProductName, newProductAmount, newProductImage, newProductDescription, newProductPrice, newProductCompany, newProductID);
+  },
+  clearProductModal: function () {
+    $('.modal').removeClass('is-active');
     $("#new-product-name").val('');
     $("#new-product-image").val('');
     $("#new-product-company").val('');
     $("#new-product-description").val('');
     $("#new-product-amount").val('');
     $("#new-product-price").val('');
-    this.createProduct(newProduct);
-    purchaseService.addProduct(newProductName, newProductAmount, newProductImage, newProductDescription, newProductPrice, newProductCompany, newProductID);
   },
   storeNewComment: async function (commentText, ID) {
     console.log('Recording to the blockchain...');
@@ -65,7 +74,7 @@ App = {
       "asset": ID,
       "comment": commentText
     };
-    this.storeComments(reqBody);
+    this.addCommentsInMemory(reqBody);
     await commentsService.postComment(reqBody);
     console.log('Done.');
   },
@@ -73,36 +82,30 @@ App = {
     let commentTextElement = $('#' + commentID + '-comment-area');
     let commentText = commentTextElement.val().trim();
     if (commentText == '') return;
-    this.createComment(commentText, commentID);
+    this.showComment(commentText, commentID);
     commentTextElement.val('');
     await this.storeNewComment(commentText, commentID);
     this.readCommentsInMemory();
   },
-  createComment: function (comment, commentID) {
+  showComment: function (comment, commentID) {
     let commentTemplate = $('#' + commentID).find('.comment:first').clone().removeClass('is-hidden');
     commentTemplate.html('<article class="is-warning message"><div class="message-body">' + comment + ' — Verified Customer </div></article>');
     let lastComment = $('#' + commentID).find('.comment:last');
     commentTemplate.insertBefore(lastComment);
   },
-  loadComments: async function () {
+  printComments: async function () {
     comments = await commentsService.getComments()
     comments.data.forEach((data) => {
-      this.storeComments(data)
+      this.addCommentsInMemory(data)
     });
     let commentArray = this.readCommentsInMemory();
     for (i = 0; i <= commentArray.length; i++) {
       if (commentArray[i] != undefined) {
-        this.createComment(commentArray[i].comment, commentArray[i].asset);
+        this.showComment(commentArray[i].comment, commentArray[i].asset);
       }
     }
   },
-  currentUser: function () {
-    return $('#login-input').find('.input').val();
-  },
-  userWallet: function (user) {
-    return this.walletMapping[user];
-  },
-  makePurchase: function (buyer, seller, amount, productID) {
+  payForProduct: function (buyer, seller, amount, productID) {
     paymentService.transferFrom(buyer, seller, amount)
     purchaseService.purchaseProduct(productID, buyer);
   },
@@ -119,13 +122,13 @@ App = {
       return;
     }
     alert('Thanks for shopping.');
-    this.makePurchase(user, store, productPrice, productID)
+    this.payForProduct(user, store, productPrice, productID)
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
   },
-  storeComments: function(commentData) {
+  addCommentsInMemory: function (commentData) {
     this.commentsInMemory.push(commentData);
   },
-  readCommentsInMemory: function() {
+  readCommentsInMemory: function () {
     return this.commentsInMemory;
   },
 }

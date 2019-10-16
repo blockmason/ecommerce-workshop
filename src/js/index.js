@@ -10,6 +10,7 @@ App = {
     'Harish': '0xfe54015db0b55ac8a3ce66f5187772c47911d8a3'.toLowerCase(),
     'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
+  commentsInMemory: [],
   init: async function () {
     this.store = await purchaseService.getProducts();
     this.printProducts();
@@ -60,15 +61,22 @@ App = {
   },
   storeNewComment: async function (commentText, ID) {
     console.log('Recording to the blockchain...');
-    await commentsService.postComment(commentText, ID);
+    const reqBody = {
+      "asset": ID,
+      "comment": commentText
+    };
+    this.storeComments(reqBody);
+    await commentsService.postComment(reqBody);
     console.log('Done.');
   },
   postComment: async function (commentID) {
-    let commentText = $('#' + commentID + '-comment-area');
-    if (commentText.val().trim() == '') return;
-    this.createComment(commentText.val().trim(), commentID);
-    await this.storeNewComment(commentText.val().trim(), commentID);
-    commentsService.readCommentsInMemory();
+    let commentTextElement = $('#' + commentID + '-comment-area');
+    let commentText = commentTextElement.val().trim();
+    if (commentText == '') return;
+    this.createComment(commentText, commentID);
+    commentTextElement.val('');
+    await this.storeNewComment(commentText, commentID);
+    this.readCommentsInMemory();
   },
   createComment: function (comment, commentID) {
     let commentTemplate = $('#' + commentID).find('.comment:first').clone().removeClass('is-hidden');
@@ -77,8 +85,11 @@ App = {
     commentTemplate.insertBefore(lastComment);
   },
   loadComments: async function () {
-    await commentsService.getComments();
-    let commentArray = commentsService.readCommentsInMemory();
+    comments = await commentsService.getComments()
+    comments.data.forEach((data) => {
+      this.storeComments(data)
+    });
+    let commentArray = this.readCommentsInMemory();
     for (i = 0; i <= commentArray.length; i++) {
       if (commentArray[i] != undefined) {
         this.createComment(commentArray[i].comment, commentArray[i].asset);
@@ -110,6 +121,12 @@ App = {
     alert('Thanks for shopping.');
     this.makePurchase(user, store, productPrice, productID)
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
+  },
+  storeComments: function(commentData) {
+    this.commentsInMemory.push(commentData);
+  },
+  readCommentsInMemory: function() {
+    return this.commentsInMemory;
   },
 }
 

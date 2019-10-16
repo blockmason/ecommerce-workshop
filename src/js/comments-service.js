@@ -7,32 +7,14 @@ const commentsMicroservice = link({
 
 
 commentsService = {
-    commentsInMemory: [],
 
-    postComment: async function (commentText, ID) {
-            const reqBody = {
-                "asset": ID,
-                "comment": commentText
-            };
-            $('#' + ID + '-comment-area').val('');
-            this.storeComments(reqBody);
-            await commentsMicroservice.post('/postComment', reqBody);
+    postComment: async function (reqBody) {
+            return await commentsMicroservice.post('/postComment', reqBody);
     },
 
     getComments: async function () {
-        const comments = await commentsMicroservice.get('/events/Comment');
-        comments.data.forEach((data) => {
-            this.storeComments(data)
-        });
+        return await commentsMicroservice.get('/events/Comment');
     },
-
-    storeComments: function(commentData) {
-        this.commentsInMemory.push(commentData);
-    },
-
-    readCommentsInMemory: function() {
-        return this.commentsInMemory;
-    }
 }
 
 module.exports = commentsService;

@@ -1,9 +1,10 @@
 const { link } = require('@blockmason/link-sdk');
+require('dotenv').config();
 
 // Purchse Service API
 const purchaseMicroservice = link({
-    clientId: 'Miko76KUQlRlqcV8S-rYlw2m_MkFDt9HWLaidl3OGp4',
-    clientSecret: 'oH+ScLTgaM+jLil+szLnRwYZPk9MPm585h9glUA9ZDXfRL8O4tOpmqxnSyMmrqx'
+    clientId: process.env.PURCHASE_CLIENT_ID,
+    clientSecret: process.env.PURCHASE_CLIENT_SECRET
 });
 
 purchaseService = {

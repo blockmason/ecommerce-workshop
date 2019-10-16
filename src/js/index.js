@@ -8,7 +8,7 @@ App = {
   walletMapping: {
     'Drake': '0xc1b63e1bb4aedfbce9cf44316e7738f086d33219'.toLowerCase(),
     'Bianca': '0x83fe96cdd189e4f3c965f37309e1597a8e76aae2'.toLowerCase(),
-    'Harish': '0xfe54015db0b55ac8a3ce66f5187772c47911d8a3'.toLowerCase(),
+    'Harish': '0x9a10e85924da9fe6a12a1a30d3d07e415f2ac823'.toLowerCase(),
     'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
   currentUser: function () {
@@ -69,14 +69,12 @@ App = {
     $("#new-product-price").val('');
   },
   storeNewComment: async function (commentText, ID) {
-    console.log('Recording to the blockchain...');
     const reqBody = {
       "asset": ID,
       "comment": commentText
     };
     this.addCommentsInMemory(reqBody);
     await commentsService.postComment(reqBody);
-    console.log('Done.');
   },
   postComment: async function (commentID) {
     let commentTextElement = $('#' + commentID + '-comment-area');
@@ -105,9 +103,11 @@ App = {
       }
     }
   },
-  payForProduct: function (buyer, seller, amount, productID) {
-    paymentService.transferFrom(buyer, seller, amount)
+  payForProduct: async function (buyer, seller, amount, productID) {
     purchaseService.purchaseProduct(productID, buyer);
+    alert('Thanks for shopping');
+    paymentService.transferFrom(buyer, seller, amount);
+    console.log('purchase complete');
   },
   purchase: async function (productPrice, productID) {
     user = this.userWallet(this.currentUser());
@@ -121,7 +121,7 @@ App = {
       alert("You Don't Have Enough Money");
       return;
     }
-    alert('Thanks for shopping.');
+    // alert('Thanks for shopping.');
     this.payForProduct(user, store, productPrice, productID)
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
   },

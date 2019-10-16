@@ -28,7 +28,6 @@ purchaseService = {
             "purchaser": buyerAddress
         };
         await purchaseMicroservice.post('/purchaseProduct', reqBody);
-        console.log('purchase complete!')
         return;
     },
 

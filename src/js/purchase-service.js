@@ -29,7 +29,6 @@ purchaseService = {
             "purchaser": buyerAddress
         };
         await purchaseMicroservice.post('/purchaseProduct', reqBody);
-        return;
     },
 
     getProducts: async function () {

@@ -1,5 +1,4 @@
 const { link } = require('@blockmason/link-sdk');
-require('dotenv').config();
 
 const commentsMicroservice = link({
     clientId: process.env.COMMENT_CLIENT_ID,

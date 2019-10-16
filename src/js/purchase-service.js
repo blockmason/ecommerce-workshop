@@ -1,5 +1,4 @@
 const { link } = require('@blockmason/link-sdk');
-require('dotenv').config();
 
 // Purchse Service API
 const purchaseMicroservice = link({

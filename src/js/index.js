@@ -1,7 +1,6 @@
 const paymentService = require('./payments-service.js');
 const commentsService = require('./comments-service.js');
 const purchaseService = require('./purchase-service.js');
-require('dotenv').config();
 
 App = {
   store: [],

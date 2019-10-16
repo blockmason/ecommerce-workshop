@@ -1,5 +1,4 @@
 const { link } = require('@blockmason/link-sdk');
-require('dotenv').config();
 
 // Ethereum Ropsten API access
 const paymentMicroservice = link({

@@ -1,19 +1,19 @@
 # Create and Deploy Smart Contracts
-Goal: Creating a 'purchasing' and custom token smart contracts and deploy them to the blockchain. 
+Goal: Create a 'purchasing' and 'custom token' smart contracts and deploy them to the blockchain. 
 
 ### Create a Smart Contract
 Smart contracts are essentially lines of code which control the execution of a transaction between blockchain accounts based on events. Smart contracts are regarded as self-executing and intended to avoid the need of intermediaries or 3rd parties.
 
-We will use the Solidity (https://solidity.readthedocs.io/en/latest/) programming language throughout these tutorials to program Ethereum-blockchain compatible smart contracts. 
+We will use the Solidity (https://solidity.readthedocs.io/en/latest/) programming language throughout these tutorials to program Ethereum-blockchain compatible smart contracts. **Please refer to this documentation if any Solidity syntax used below is unfamiliar.** 
 
 Solidity has influences from C++, Python and JavaScript and you will see some of the similar syntax used in the following examples. 
 
 #### A 'Purchasing' Smart Contract
-In this series, we are going to build a simple blockchain-powered ecommerce marketplace, where buyers are limited to only purchase 1 of any item. 
+In this series, we are going to build a simple **blockchain-powered ecommerce marketplace**, where buyers are limited to only purchase 1 of any item. 
 
-We will start with creating a basic `Purchasing` smart contract to record products, total quantity, and buyers on the blockchain.
+We will start with creating a basic `Purchasing` smart contract to record products, quantity, and buyers on the blockchain.
 
-> We start with the contract template file `contracts/Purchasing-template.sol`. 
+> Open up the contract template file `contracts/Purchasing-template.sol`. 
 ```
 pragma solidity ^0.5.8;
 
@@ -40,15 +40,15 @@ contract Purchasing {
 }
 ```
 Things to note:
-* A `struct` is custom defined object type which can group together different types of variables. In this contract, we have a `ProductDetails` custom object which contains a bunch of variables defining the various attributes of the product.
+* A `struct` is custom defined object type in Solidity which can group together different types of variables. In this contract, we have a `ProductDetails` custom object which contains a bunch of variables defining the various attributes of the product.
 
 * Events are inheritable members of contracts. When you call them, they cause the arguments to be stored in the transaction’s log - a special data structure in the blockchain. We can access these events from a tool like Blockmason Link. To trigger an event, we use the `emit` keyword followed by the event class. 
 
 * The product details are mapped to a product in the `productList` mapping object, which can be publicly accessed.
 
-* The `authority` of this smart contract will be the address which deploys the contract (i.e. `msg.sender`). When deploying a contract using Blockmason Link, the Link default account is the deploying address and will thus be the contract `authority`. 
+* The `authority` of this smart contract will be the address which deploys the contract (i.e. the `msg.sender`). When deploying a contract using Blockmason Link, the Link default wallet is the deploying address and will thus be the contract's `authority`. 
 
-* The functions to complete the code for are: `#addProduct()`, `#addProductQuantity()`, `#purchaseProduct()`, and `#getPurchasers()`. 
+* The functions we need to complete are: `#addProduct()`, `#addProductQuantity()`, `#purchaseProduct()`, and `#getPurchasers()`. 
 
 ##### #addProduct()
 ```
@@ -56,7 +56,7 @@ function addProduct(string memory product, uint addQuantity, string memory url, 
     //TODO
 }
 ```
-> This is the most involved function out of the list, but is still relatively quite simple. We just need to add our arguments to the corresponding `product` name in the `productList` mapping. We complete the function with emitting the Product event. 
+This is the most involved function out of the list, but is still relatively quite simple. We just need to add our arguments to the corresponding `product` in the `productList` mapping. We complete the function by emitting the `Product` event. 
 
 ```
 function addProduct(string memory product, uint addQuantity, string memory url, string memory description, string memory price, string memory company, string memory id) public {
@@ -76,7 +76,7 @@ function addProductQuantity(string memory product, uint addQuantity) public {
     //TODO
 }
 ```
-> Here we want to add quantity to an existing product so we need to first check that the product exists in the `productList` before cumulatively adding the quantity. We will use the `require()` Solidity keyword to check for this requirement first.
+Here we want to add quantity to an existing product so we need to first check that the product exists in the `productList` before cumulatively adding the quantity. We will use the `require()` Solidity keyword to check for this requirement first.
 
 ```
 function addProductQuantity(string memory product, uint addQuantity) public {
@@ -92,7 +92,7 @@ function getPurchasers(string memory product) public view returns (address[] mem
 }
 ```
 
-> Here, we simply need to return the `purchasers` array for a particular `product` from the `productList`:
+Here, we simply need to return the `purchasers` array for a particular `product` from the `productList`:
 
 ```
 function getPurchasers(string memory product) public view returns (address[] memory purchasers) {
@@ -107,10 +107,10 @@ function purchaseProduct(string memory product, address purchaser) public {
 }
 ```
 
-> Here we need to do 2 things:
-> 1. First check if there is product available for purchase. Since each buyer is limited to 1 of any item for our example, we can simply check that the `quantity` is greater than the length of the `purchasers` array. We will use the `require()` Solidity keyword to check for this requirement first. 
+Here we need to do 2 things:
+1. First check if there is product available for purchase. Since each buyer is limited to 1 of any item for our example, we can simply check that the product `quantity` is greater than the length of the `purchasers` array. We will use the `require()` Solidity keyword to check for this requirement first. 
 
-> 2. Add the buyer to the `purchasers` array for the product. 
+2. Add the buyer to the `purchasers` array for the product. 
 
 ```
 function purchaseProduct(string memory product, address purchaser) public {
@@ -133,7 +133,7 @@ The process for connecting and interacting with external blockchains using Link 
 6. Label your API Consumer (e.g. the name of your app using the APIs)
 7. Obtain your OAuth API authentication (automatically generated)
 
-Let us now deploy the `Purchasing.sol` smart contract to the blockchain. 
+Let us now deploy the `Purchasing.sol` smart contract to a public blockchain. 
 
 > 1. In Link, click on the *`Create new`* button which starts the new project wizard.
 
@@ -143,11 +143,11 @@ Let us now deploy the `Purchasing.sol` smart contract to the blockchain.
 
 ![Link New Contract](images/link_new_contract.png)
 
-> 3. Under *Which Ethereum account would you like to use?*, use the *`Default Account`*. This is the account we seeded with test utility tokens for our specific blockchain as part of the setup. 
+> 3. Under *Which Ethereum account would you like to use?*, use the *`Default Account`*. This is the Link default wallet we seeded with test utility tokens for our specific blockchain as part of the setup. 
 
-![Default Link Account](images/link_default_account.png)
+![Default Link Wallet](images/link_default_account.png)
 
-> 4. Under *Which network would you like to use?*, select *`Create new`* and name it based on the network you are using. Keep the *Block Confirmations Needed* at 0 and the default *EVM Version*. Press *`Save`* and *`Next`*.
+> 4. Under *Which network would you like to use?*, select *`Create new`* and name it based on the network you are using. Keep the *Block Confirmations Needed* at 0 (unless you are using a public blockchain Mainnet, in which case use 1) and the default *EVM Version*. Press *`Save`* and *`Next`*.
 
 ![New Network Link](images/link_new_network.png)
 
@@ -155,13 +155,13 @@ Let us now deploy the `Purchasing.sol` smart contract to the blockchain.
 
 ![New Network Connector Link](images/link_network_connector.png)
 
-> 6. Now we just need to label our Deployment. Under *Where is your contract deployed?*, select *`Create new`*. Call this deployment `Purchasing Testnet Deployment`. Since we do not have **an existing contract deployment**, leave the *Address* field blank. Ensure the *Account* is the `Default Account`, the *Contract* is the `Purchasing` contract and the desired *Network*. Press *`Save`* and *`Next`*.
+> 6. Now we just need to label our Deployment. Under *Where is your contract deployed?*, select *`Create new`*. Call this deployment `Purchasing Testnet Deployment`. Since we **do not have an existing contract deployment**, leave the *Address* field blank. Ensure the *Account* is the `Default Account`, the *Contract* is the `Purchasing` contract and the desired *Network*. Press *`Save`* and *`Next`*.
 
 ![Contract Deployment Prep](images/link_contract_check_deploy.png)
 
 > 7. Now we are ready to deploy our contract to the desired network. When asked *Are you ready to perform the following deployment?*, press `Deploy` and you should get a deployment in progress indicator icon. This might take a few seconds to complete. If deployed correctly, you will automatically proceed to the next step to setup your API.
 
-**Note: if you get an *insufficient gas fee funds related error, you need to seed your Link default account/wallet with test utility tokens of your selected blockchain network. Refer to the *Blockchain network token setup* section of Tutorial 1.**
+**Note: if you get an *insufficient gas fee funds related error, you need to seed your Link default wallet with test utility tokens of your selected blockchain network. Refer to the *Blockchain network token setup* [section of Tutorial 1.](https://github.com/blockmason/ecommerce-workshop/blob/master/Tutorial_1/tutorial_1.md#blockchain-network-token-setup)**
 
 ![Link Confirm Deployment](images/link_confirm_deployment.png)
 
@@ -177,7 +177,7 @@ Let us now deploy the `Purchasing.sol` smart contract to the blockchain.
 
 ![Link Setup OAuth](images/link_oauth.png)
 
-Once you hit *`Finish`*, you should end up back at Home page and see your Purchasing code in the code editor, the API tab and a gear icon which toggles the `client_id` and `client_secret` auth credentials at the bottom of the page. You will use these credentials to interact with you newly created APIs!
+Once you hit *`Finish`*, you should end up back at Home page and see your Purchasing code in the code editor, the API tab and a gear icon which toggles the `client_id` and `client_secret` auth credentials at the bottom of the page. **You will use these credentials to interact with you newly created APIs!**
 
 ![Link API Setup Completed](images/link_api_setup_completed.png)
 
@@ -197,11 +197,11 @@ Let us also double check that our Purchasing contract deployed successfully on t
 
 **Congrats! You have successfully deployed your first smart contract to the blockchain!** 
 
-### Deploy your custom token Smart Contract
+### Deploy your 'Custom Token' Smart Contract
 
 Following the same steps as before, we will now deploy a custom token which will be used 'under the hood' in our ecommerce marketplace app. 
 
-> In `contracts/`, open up `BasicToken.sol`. Note this is a simplified contract adapted from the the ERC20 standard token contract (you can read more about the Ethereum token standard here: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)
+> In `contracts/`, open up `BasicToken.sol`. Note this is **a simplified contract adapted from the the ERC20 standard token contract** (you can read more about the Ethereum token standard here: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md)
 
 There are only a few customizations you need to do to this contract before deploying it:
 ```

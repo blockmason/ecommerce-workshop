@@ -35,10 +35,10 @@ App = {
     $('#' + product.id).find(".buy-now").attr('id', product.id + '-buy');
     $('#' + product.id).find(".image").css('background-image', 'url(' + product.url + ')');
     $('#' + product.id).find(".post-comment").click(function () {
-      this.postComment($('#' + this.id).closest(".column").attr('id'));
+      App.postComment($('#' + this.id).closest(".column").attr('id'));
     })
     $('#' + product.id).find(".buy-now").click(function () {
-      this.purchase($('#' + this.id).closest('.column').find('.product-price').data('price'), $('#' + this.id).closest('.column').find('.product-price').data('productID'));
+      App.purchase($('#' + this.id).closest('.column').find('.product-price').data('price'), $('#' + this.id).closest('.column').find('.product-price').data('productID'));
     })
   },
   printProducts: function () {

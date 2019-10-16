@@ -32,15 +32,6 @@ purchaseService = {
         return;
     },
 
-    getPurchasers: async function (product) {
-        const reqBody = {
-            "product": product
-        };
-        console.log('getting purchasers...');
-        purchasers = await purchaseMicroservice.get('/getPurchasers', reqBody);
-        console.log(purchasers, 'done...');
-    },
-
     getProducts: async function () {
         productList = await purchaseMicroservice.get('/events/Product');
         return productList.data

@@ -1,5 +1,5 @@
 # Create and Deploy Smart Contracts
-Goal: Create a 'purchasing' and 'custom token' smart contracts and deploy them to the blockchain. 
+Goal: Create a 'purchasing', 'custom token' and 'comments' smart contracts and deploy them to the blockchain. 
 
 ### Create a Smart Contract
 Smart contracts are essentially lines of code which control the execution of a transaction between blockchain accounts based on events. Smart contracts are regarded as self-executing and intended to avoid the need of intermediaries or 3rd parties.
@@ -241,6 +241,31 @@ treasury = address(`0xFeE9813A4B268793D4Edc6DF11A760C3c07a2c98`);
 
 **Your custom token contract is ready to go!** Follow the previous deployment steps in Blockmason Link to deploy the custom token contract. 
 
-Use the blockchain explorer to confirm you have successfully deployed your token contract. 
+Use the blockchain explorer to confirm you have successfully deployed your token contract.
 
-In the next tutorial, we will use our Link APIs to interact with both the `Purchasing.sol` and `CustomToken.sol` smart contracts. 
+### Deploy your 'Comments' Smart Contract
+The final Smart Contract we will deploy is for **Comments**, with the full Solidity code in `contracts/Comments.sol`.
+
+The contract is quite straight-forward using just a `Comment` event emitter every time a comment is made about a product:
+
+```
+pragma solidity ^0.5.10;
+
+contract Comments {
+    event Comment(string asset, string comment);
+    address public authority;
+
+    constructor() public {
+        authority = msg.sender;
+    }
+
+    function postComment(string memory asset, string memory comment) public {
+        emit Comment(asset, comment);
+    }
+}
+```
+Follow the previous deployment steps in Blockmason Link to deploy the Comments contract to your blockchain. 
+
+Use the blockchain explorer to confirm you have successfully deployed your token contract.
+
+**Congrats!** You have successfully created and deployed multiple Smart Contracts! In the next tutorial, we will use our Link APIs to interact with these contracts. 

@@ -22,8 +22,6 @@ purchaseService = {
     },
 
     purchaseProduct: async function (product, buyerAddress) {
-        console.log(product);
-        console.log(buyerAddress);
         const reqBody = {
             "product": product,
             "purchaser": buyerAddress

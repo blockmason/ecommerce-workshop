@@ -26,6 +26,6 @@ Tokens are specific to a network and this also applies between test and mainnet 
 
 1. Obtain test GO tokens from the GO project community.
 
-2. Confirm you have received the testnet GO tokens by searching your Link account wallet address with the GoChain testnet block explorer: https://testnet-explorer.gochain.io/ . 
+2. Confirm you have received the testnet GO tokens by searching your Link default wallet address with the GoChain testnet block explorer: https://testnet-explorer.gochain.io/ . 
 
 Now you are all setup with Link and some test tokens and ready to proceed with the [next tutorial](https://github.com/blockmason/ecommerce-workshop/blob/master/Tutorial_2/tutorial_2.md)!

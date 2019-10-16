@@ -106,7 +106,7 @@ App = {
   },
   payForProduct: async function (buyer, seller, amount, productID) {
     purchaseService.purchaseProduct(productID, buyer);
-    // alert('Thanks for shopping');
+    alert('Thanks for shopping');
     paymentService.transferFrom(buyer, seller, amount);
     console.log('purchase complete');
   },

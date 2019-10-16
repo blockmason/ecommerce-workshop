@@ -184,7 +184,160 @@ Now that we have created the Smart Contracts, now we need to write our applicati
 
 ---
 ## Building portable microservices
-
+In this section we will break down how each microservice is constructed using JavaScript.
 ### Payments Service
+
+First we need to set up the SDK.
+```
+const { link } = require('@blockmason/link-sdk');
+
+// Ethereum Ropsten API access
+const paymentMicroservice = link({
+    clientId: "<CLIENT_ID>",
+    clientSecret: "<CLIENT_SECRET>"
+});
+
+```
+
+Next we need two functions, the first will check the balance of a user's wallet. We will be using this to check that the customer has enough money in their wallet to make the purchase when they are checking out. The next function will transfer funds from one user to another. This will move money from the customer to the producer when a purchase is made. 
+
+```
+const paymentService = {
+
+    balanceOf: async function (address) {
+        const reqBody = {
+            "_tokenholder": address
+        }
+        const { balance } = await paymentMicroservice.get('/balanceOf', reqBody);
+        return(parseInt(balance, 16) / Math.pow(10, 18));
+    },
+
+    transferFrom: async function transferFunds(sender, recipient, amount) {
+        const funds = (amount*Math.pow(10, 18)).toString(16);
+        const transferBody = {
+          "_from": sender,
+          "_to": recipient,
+          "_value": funds
+        }
+        try {
+          console.log('transfering funds now');
+          await paymentMicroservice.post('/transferFrom', transferBody);
+          console.log('transferring funds complete');
+        }
+        catch(err) {
+          console.log(err);
+        }
+       },
+}
+```
+
+Finally we export our payment service.
+
+```
+module.exports = paymentService;
+```
+---
 ### Purchase Service
+First we need to set up the SDK.
+```
+const { link } = require('@blockmason/link-sdk');
+
+// Purchse Service API
+const purchaseMicroservice = link({
+    clientId: "<CLIENT_ID>",
+    clientSecret: "<CLIENT_SECRET>"
+});
+```
+
+
+
+```
+purchaseService = {
+    addProduct: async function (product, quantity, url, description, price, company, id) {
+        const reqBody = {
+            "product": product.toString(),
+            "addQuantity": quantity.toString(),
+            "url": url.toString(),
+            "description": description.toString(),
+            "price": price.toString(),
+            "company": company.toString(),
+            "id": id.toString(),
+        };
+        return await purchaseMicroservice.post('/addProduct', reqBody);
+    },
+
+    purchaseProduct: async function (product, buyerAddress) {
+        console.log(product);
+        console.log(buyerAddress);
+        const reqBody = {
+            "product": product,
+            "purchaser": buyerAddress
+        };
+        await purchaseMicroservice.post('/purchaseProduct', reqBody);
+        console.log('purchase complete!')
+        return;
+    },
+
+    getPurchasers: async function (product) {
+        const reqBody = {
+            "product": product
+        };
+        console.log('getting purchasers...');
+        purchasers = await purchaseMicroservice.get('/getPurchasers', reqBody);
+        console.log(purchasers, 'done...');
+    },
+
+    getProducts: async function () {
+        productList = await purchaseMicroservice.get('/events/Product');
+        return productList.data
+    }
+}
+
+module.exports = purchaseService;
+```
 ### Comments Service
+
+First we need to set up the SDK.
+```
+const { link } = require('@blockmason/link-sdk');
+
+const commentsMicroservice = link({
+    clientId: "<CLIENT_ID>",
+    clientSecret: "<CLIENT_SECRET>"
+});
+```
+
+
+
+```
+commentsService = {
+    commentsInMemory: [],
+
+    postComment: async function (commentText, ID) {
+            const reqBody = {
+                "asset": ID,
+                "comment": commentText
+            };
+            $('#' + ID + '-comment-area').val('');
+            this.storeComments(reqBody);
+            await commentsMicroservice.post('/postComment', reqBody);
+    },
+
+    getComments: async function () {
+        const comments = await commentsMicroservice.get('/events/Comment');
+        comments.data.forEach((data) => {
+            this.storeComments(data)
+        });
+    },
+
+    storeComments: function(commentData) {
+        this.commentsInMemory.push(commentData);
+    },
+
+    readCommentsInMemory: function() {
+        return this.commentsInMemory;
+    }
+}
+
+module.exports = commentsService;
+```

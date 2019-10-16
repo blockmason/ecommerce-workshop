@@ -1,5 +1,5 @@
 # Interact with Smart Contract functions to build Microservices
-Goal: Use Link APIs to interact with the previously deployed 'purchasing' and custom token smart contracts. 
+Goal: Use Link APIs to interact with the previously deployed `purchasing` and `custom token` smart contracts. 
 
 ### Install Link JavaScript SDK
 
@@ -45,11 +45,11 @@ We then instantiate the `link` object by passing in the `clientId` and `clientSe
 
 > Enter in your Link `clientId` and `clientSecret` found at the bottom of the code editor or API endpoint screen in Link. 
 
-Note - because we are using *node* here, we pass in the `fetch` object into `link` to help manage our http requests. 
+Note - because we are using *node*, we pass in the `fetch` object into `link` to help manage our http requests. 
 
 Now our `project` object is correctly initialized and connected with Link to make `GET` and `POST` requests with simply `project.get(..)` and `project.post(..)` respectively!
 
-**Remember: All calls to the API endpoints must be async!**
+**Remember: All calls to the API endpoints are async!**
 
 #### addProduct()
 ```
@@ -117,7 +117,7 @@ async function addProductQuantity(product, quantity) {
   }
 }
 ```
-Now if the `http` response object contains an error, it would be because the `require(...)` statement failed which helps provide context for the reason for the error.
+Now if the `http` response object contains an error, at the function level, it would be because the `require(...)` statement failed which helps provide context for the error handling.
 
 #### purchaseProduct()
 ```
@@ -172,4 +172,4 @@ you will see an output like:
 
 **Congrats! You have succesfully interacted with your smart contract using web APIs through Link!**
 
-In the next tutorial, we will create microservices, which will be short, concise javascript files running one specific service, which will then be used by our front-end ecommerce marketplace app. 
+In the **[next tutorial](https://github.com/blockmason/ecommerce-workshop/blob/master/Tutorial_4/tutorial_4.md)**, we will create a few microservices, which will be short, concise, javascript files each running one specific service. These microservices will then be used by our front-end ecommerce marketplace app.

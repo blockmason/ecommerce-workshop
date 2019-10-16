@@ -3,8 +3,8 @@ const { link } = require('@blockmason/link-sdk');
 
 // Authenticate with Link API
 const project = link({
-    clientId: 'OgjoJLf92GG99gixM62bCFr6TFLGfiQx5g6ulaJ_GrA',
-    clientSecret: '4BNAYRXX5QO4gwZscx7VlhnX/a/TaPSqaCIZ7n4N2QDq190rlck6yudkC9k3zGG'
+    clientId: '',
+    clientSecret: ''
   }, {
     fetch
 });

@@ -13,12 +13,12 @@ async function addProduct(product, addQuantity, url, description, price, company
     //TODO
 }
 
-async function purchaseProduct(product) {
-    //TODO 
-}
-
 async function addProductQuantity(product, quantity) {
     //TODO
+}
+
+async function purchaseProduct(product) {
+    //TODO 
 }
 
 async function getProductDetails(product) {

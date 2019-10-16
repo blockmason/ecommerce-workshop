@@ -16,16 +16,16 @@ Tokens are specific to a network and this also applies between test and mainnet 
 
 > For the public Ethereum blockchain, follow the setup steps outlined here: https://github.com/blockmason/link-onboarding/blob/master/Ethereum.md#setup . The setup requires 3 steps:
 
-1. Instead of running your own Ethereum node, you can just setup an Infura account, which provides a hosted, cloud-based, Ethereum node that you can connect to. 
+1. Instead of running your own Ethereum node, you can just setup an [Infura](https://infura.io) account, which provides a hosted, cloud-based, Ethereum node that you can connect to. 
 
 2. Obtain 1 ETH, recorded on the Ethereum Ropsten testnet from a testnet 'faucet' which drips tokens.
 
 3. Confirm you have received the test 1 ETH by visiting the Ethereum Ropsten testnet **block explorer** at: https://ropsten.etherscan.io/ . Search your wallet address to see your balance. 
 
-> For the public GoChain blockchain, follow the setup steps outlined here: https://github.com/blockmason/link-onboarding/blob/master/Ethereum.md#setup . The setup requires only 2 steps since GoChain provides public node APIs that Link can connect to:
+> For the public GoChain blockchain, follow the setup steps outlined here: https://github.com/blockmason/link-onboarding/blob/master/GoChain.md#setup . The setup requires only 2 steps since GoChain provides public node APIs that Link can connect to:
 
 1. Obtain test GO tokens from the GO project community.
 
 2. Confirm you have received the testnet GO tokens by searching your Link account wallet address with the GoChain testnet block explorer: https://testnet-explorer.gochain.io/ . 
 
-Now you are all setup with Link and some test tokens and ready to proceed with the next tutorial!
+Now you are all setup with Link and some test tokens and ready to proceed with the [next tutorial](https://github.com/blockmason/ecommerce-workshop/blob/master/Tutorial_2/tutorial_2.md)!

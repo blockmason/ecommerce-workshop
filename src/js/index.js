@@ -36,10 +36,26 @@ App = {
     $('#' + product.id).find(".image").css('background-image', 'url(' + product.url + ')');
     $('#' + product.id).find(".post-comment").click(function () {
       App.postComment($('#' + this.id).closest(".column").attr('id'));
-    })
+    });
     $('#' + product.id).find(".buy-now").click(function () {
       App.purchase($('#' + this.id).closest('.column').find('.product-price').data('price'), $('#' + this.id).closest('.column').find('.product-price').data('productID'));
-    })
+    });
+  },
+  customerOwnedProduct: async function (product) {
+    customer = this.userWallet(this.currentUser());
+    for (let i = 0; i <= this.store.length; i++) {
+      if(this.store[i] != undefined){
+        const product = await this.store[i].product;
+        purchasersArray = await this.getWhoBoughtProduct(product);
+        if (purchasersArray.purchasers.includes(customer)) {
+          $('#' + product.replace(/\s/g, '') + '-buy').text('Purchased').attr('disabled', true);
+          $('#' + product.replace(/\s/g, '') + '-comment-area').attr('disabled', false);
+        } else {
+          $('#' + product.replace(/\s/g, '') + '-buy').text('Buy Now').attr('disabled', false);
+          $('#' + product.replace(/\s/g, '') + '-comment-area').attr('disabled', true);
+        }
+      }
+    }
   },
   printProducts: function () {
     for (i = 0; i < this.store.length; i++) {
@@ -116,9 +132,9 @@ App = {
       alert('Not logged in');
       return;
     }
-    
+
     purchasersArray = await this.getWhoBoughtProduct(productID);
-    if (purchasersArray.purchasers.includes(user)){
+    if (purchasersArray.purchasers.includes(user)) {
       alert("You already own this");
       return;
     }
@@ -141,7 +157,6 @@ App = {
   },
   getWhoBoughtProduct: async function (productID) {
     const purchasersArray = await purchaseService.getPurchasers(productID);
-    console.log(purchasersArray, productID);
     return purchasersArray;
   }
 }

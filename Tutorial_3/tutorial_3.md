@@ -1,4 +1,4 @@
-# Interact with Smart Contract functions to build Microservices
+# Interact with Smart Contract Functions
 Goal: Use Link APIs to interact with the previously deployed `Purchasing`, `custom token` and `Comments` smart contracts. 
 
 ### Install Link JavaScript SDK

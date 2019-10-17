@@ -106,6 +106,7 @@ App = {
   payForProduct: async function (buyer, seller, amount, productID) {
     await purchaseService.purchaseProduct(productID, buyer);
     await paymentService.transferFrom(buyer, seller, amount);
+    $('#' + productID.replace(/\s/g, '') + '-buy').removeClass('is-loading');
     alert('Thanks for shopping');
     console.log('purchase complete');
   },
@@ -121,6 +122,7 @@ App = {
       alert("You Don't Have Enough Money");
       return;
     }
+    $('#' + productID.replace(/\s/g, '') + '-buy').addClass('is-loading');
     this.payForProduct(user, store, productPrice, productID)
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
   },

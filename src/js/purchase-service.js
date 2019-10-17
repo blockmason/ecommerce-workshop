@@ -32,6 +32,14 @@ purchaseService = {
     getProducts: async function () {
         productList = await purchaseMicroservice.get('/events/Product');
         return productList.data
+    },
+
+    getPurchasers: function (productID) {
+        const reqBody = {
+            "product": productID
+        }
+        purchasers = purchaseMicroservice.get('/getPurchasers', reqBody);
+        return purchasers;
     }
 }
 

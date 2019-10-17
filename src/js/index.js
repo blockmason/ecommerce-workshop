@@ -116,6 +116,13 @@ App = {
       alert('Not logged in');
       return;
     }
+    
+    purchasersArray = await this.getWhoBoughtProduct(productID);
+    if (purchasersArray.purchasers.includes(user)){
+      alert("You already own this");
+      return;
+    }
+
     store = this.userWallet('STORE');
     amountInWallet = await paymentService.balanceOf(user);
     if (amountInWallet < productPrice) {
@@ -132,6 +139,11 @@ App = {
   readCommentsInMemory: function () {
     return this.commentsInMemory;
   },
+  getWhoBoughtProduct: async function (productID) {
+    const purchasersArray = await purchaseService.getPurchasers(productID);
+    console.log(purchasersArray, productID);
+    return purchasersArray;
+  }
 }
 
 $(window).on('load', function () {

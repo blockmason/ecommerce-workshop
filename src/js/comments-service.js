@@ -1,20 +1,17 @@
 const { link } = require('@blockmason/link-sdk');
-require('dotenv').config();
 
 const commentsMicroservice = link({
     clientId: process.env.COMMENT_CLIENT_ID,
     clientSecret: process.env.COMMENT_CLIENT_SECRET
 });
 
-
 commentsService = {
-
-    postComment: async function (reqBody) {
-            return await commentsMicroservice.post('/postComment', reqBody);
+    postComment: function (reqBody) {
+        return commentsMicroservice.post('/postComment', reqBody);
     },
 
-    getComments: async function () {
-        return await commentsMicroservice.get('/events/Comment');
+    getComments: function () {
+        return commentsMicroservice.get('/events/Comment');
     },
 }
 

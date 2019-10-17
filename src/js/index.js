@@ -1,7 +1,6 @@
 const paymentService = require('./payments-service.js');
 const commentsService = require('./comments-service.js');
 const purchaseService = require('./purchase-service.js');
-require('dotenv').config();
 
 App = {
   store: [],
@@ -9,7 +8,7 @@ App = {
   walletMapping: {
     'Drake': '0xc1b63e1bb4aedfbce9cf44316e7738f086d33219'.toLowerCase(),
     'Bianca': '0x83fe96cdd189e4f3c965f37309e1597a8e76aae2'.toLowerCase(),
-    'Harish': '0x9a10e85924da9fe6a12a1a30d3d07e415f2ac823'.toLowerCase(),
+    'Harish': '0xFeE9813A4B268793D4Edc6DF11A760C3c07a2c98'.toLowerCase(),
     'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
   currentUser: function () {
@@ -105,9 +104,9 @@ App = {
     }
   },
   payForProduct: async function (buyer, seller, amount, productID) {
-    purchaseService.purchaseProduct(productID, buyer);
+    await purchaseService.purchaseProduct(productID, buyer);
+    await paymentService.transferFrom(buyer, seller, amount);
     alert('Thanks for shopping');
-    paymentService.transferFrom(buyer, seller, amount);
     console.log('purchase complete');
   },
   purchase: async function (productPrice, productID) {
@@ -132,7 +131,6 @@ App = {
     return this.commentsInMemory;
   },
 }
-
 
 $(window).on('load', function () {
   App.init();

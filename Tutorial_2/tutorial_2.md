@@ -118,7 +118,7 @@ function purchaseProduct(string memory product, address purchaser) public {
     productList[product].purchasers.push(purchaser);
 }
 ```
-> See the completed smart contract code in `contracts/Purchasing.sol`. 
+See the completed smart contract code in `contracts/Purchasing.sol`. 
 
 ### Deploy the Purchasing Smart Contract using Blockmason Link
 The process for connecting and interacting with external blockchains using Link is relatively straightforward using the Link Project Wizard. In general, the process flow looks something like this:
@@ -244,7 +244,7 @@ treasury = address(`0xFeE9813A4B268793D4Edc6DF11A760C3c07a2c98`);
 Use the blockchain explorer to confirm you have successfully deployed your token contract.
 
 ### Deploy your 'Comments' Smart Contract
-The final Smart Contract we will deploy is for **Comments**, with the full Solidity code in `contracts/Comments.sol`.
+The final smart contract we will deploy is for **Comments**, with the full Solidity code in `contracts/Comments.sol`.
 
 The contract is quite straight-forward using just a `Comment` event emitter every time a comment is made about a product:
 
@@ -268,4 +268,4 @@ Follow the previous deployment steps in Blockmason Link to deploy the Comments c
 
 Use the blockchain explorer to confirm you have successfully deployed your token contract.
 
-**Congrats!** You have successfully created and deployed multiple Smart Contracts! In the next tutorial, we will use our Link APIs to interact with these contracts. 
+**Congrats!** You have successfully created and deployed multiple smart contracts! In the next tutorial, we will use our Link APIs to interact with these contracts. 

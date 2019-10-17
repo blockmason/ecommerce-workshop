@@ -1,4 +1,4 @@
-# Pulling it all together!
+# Run Your Ecommerce Marketplace App
 Goal: Bringing all the microservices together in one application and getting it running.
 
 ## Let's look at an overview of what we have built so far

@@ -268,4 +268,4 @@ Follow the previous deployment steps in Blockmason Link to deploy the Comments c
 
 Use the blockchain explorer to confirm you have successfully deployed your token contract.
 
-**Congrats!** You have successfully created and deployed multiple smart contracts! In the next tutorial, we will use our Link APIs to interact with these contracts. 
+**Congrats!** You have successfully created and deployed multiple smart contracts! In the [next tutorial](https://github.com/blockmason/ecommerce-workshop/blob/master/Tutorial_3/tutorial_3.md), we will use our Link APIs and Link SDKs to interact with these contracts. 

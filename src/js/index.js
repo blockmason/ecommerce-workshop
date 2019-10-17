@@ -132,14 +132,6 @@ App = {
       alert('Not logged in');
       return;
     }
-
-    purchasersArray = await this.getWhoBoughtProduct(productID);
-    if (purchasersArray.purchasers.includes(user)) {
-      alert("You already own this");
-      $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased').attr('disabled', true);
-      return;
-    }
-
     store = this.userWallet('STORE');
     amountInWallet = await paymentService.balanceOf(user);
     if (amountInWallet < productPrice) {

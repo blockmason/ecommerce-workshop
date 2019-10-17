@@ -41,7 +41,7 @@ App = {
       App.purchase($('#' + this.id).closest('.column').find('.product-price').data('price'), $('#' + this.id).closest('.column').find('.product-price').data('productID'));
     });
   },
-  customerOwnedProduct: async function (product) {
+  customerOwnedProduct: async function () {
     customer = this.userWallet(this.currentUser());
     for (let i = 0; i <= this.store.length; i++) {
       if(this.store[i] != undefined){
@@ -141,6 +141,7 @@ App = {
     $('#' + productID.replace(/\s/g, '') + '-buy').addClass('is-loading');
     this.payForProduct(user, store, productPrice, productID)
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
+    this.customerOwnedProduct();
   },
   addCommentsInMemory: function (commentData) {
     this.commentsInMemory.push(commentData);

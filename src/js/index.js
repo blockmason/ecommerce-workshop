@@ -136,6 +136,7 @@ App = {
     purchasersArray = await this.getWhoBoughtProduct(productID);
     if (purchasersArray.purchasers.includes(user)) {
       alert("You already own this");
+      $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased').attr('disabled', true);
       return;
     }
 

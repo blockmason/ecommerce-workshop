@@ -1,5 +1,5 @@
 # Interact with Smart Contract functions to build Microservices
-Goal: Use Link APIs to interact with the previously deployed `purchasing` and `custom token` smart contracts. 
+Goal: Use Link APIs to interact with the previously deployed `Purchasing`, `custom token` and `Comments` smart contracts. 
 
 ### Install Link JavaScript SDK
 
@@ -7,15 +7,15 @@ Recall that on the Link homepage, clicking on the gear icon next to `Code/API` t
 
 ![Link API Client ID and Secret](images/link_api_setup_completed.png)
 
-and the corresponding API endpoints:
+Clicking on the `Code/API` toggle also displays the available API endpoints:
 
 ![Link API endpoints](images/link_api_setup_endpoints.png)
 
-We will use these credentials to interact with the API endpoints using the Link JavaScript SDK.
+We will use `client_id` and `client_secret` credentials to interact with these API endpoints using the Link JavaScript SDK.
 
 The Link JavaScript SDK is available using Yarn or NPM (https://www.npmjs.com/package/@blockmason/link-sdk).
 
-We will also use a basic node script to interact with the APIs. To use the Link JavaScript SDK with node, we also need to install the `node-fetch` library. 
+We will also use a basic *node* script to interact with the APIs. To use the Link JavaScript SDK with node, we also need to install the `node-fetch` library. 
 
 > From the root project folder, run:
 ```
@@ -170,6 +170,6 @@ you will see an output like:
 
 ![Terminal Output Link JavaScript SDK](images/terminal_output_js_sdk.png)
 
-**Congrats! You have succesfully interacted with your smart contract using web APIs through Link!**
+**Congrats! You have succesfully interacted with your Purchasing smart contract using web APIs through Link!**
 
 In the **[next tutorial](https://github.com/blockmason/ecommerce-workshop/blob/master/Tutorial_4/tutorial_4.md)**, we will create a few microservices, which will be short, concise, javascript files each running one specific service. These microservices will then be used by our front-end ecommerce marketplace app.

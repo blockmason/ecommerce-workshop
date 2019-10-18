@@ -10,6 +10,7 @@ contract Purchasing {
         string price;
         string company;
         string id;
+        bool isSet;
     }
     mapping(string => ProductDetails) public productList;
     address public authority;

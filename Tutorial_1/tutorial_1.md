@@ -24,7 +24,7 @@ Tokens are specific to a network and this also applies between test and mainnet 
 
 > For the public GoChain blockchain, follow the setup steps outlined here: https://github.com/blockmason/link-onboarding/blob/master/GoChain.md#setup . The setup requires only 2 steps since GoChain provides public node APIs that Link can connect to:
 
-1. Obtain test GO tokens from the GO project community.
+1. Obtain test GO tokens from the GO faucet https://faucet.gochain.io/.
 
 2. Confirm you have received the testnet GO tokens by searching your Link default wallet address with the GoChain testnet block explorer: https://testnet-explorer.gochain.io/ . 
 

@@ -23,11 +23,11 @@ Once we have our front-end set up, we can pull each service together in the ```i
 
 Instead of breaking down the entire ```index.html``` and ```index.js``` files let's take a look at some of the general concepts behind these files and the way they interact.
 
-The core piece of the ```index.html``` file that we interact with is the product template. Inside the product template we create and store most of our data. The bulk of the DOM manipulation is achieved through the JavaScript library Jquery. 
+The core piece of the ```index.html``` file that we interact with is the product template. Inside the product template we create and store most of our data. The bulk of the DOM manipulation is achieved through the JavaScript library Jquery.
 
 ![images/jquery.png](images/jquery.png)
 
-on the ```index.js``` side whenever you see ```$('something in here)``` that is using the Jquery library.
+on the ```index.js``` side whenever you see ```$('something in here')``` that is using the Jquery library.
 
 ![images/product-template.png](images/product-template.png)
 

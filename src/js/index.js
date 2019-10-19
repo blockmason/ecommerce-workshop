@@ -11,6 +11,7 @@ App = {
     'Harish': '0xFeE9813A4B268793D4Edc6DF11A760C3c07a2c98'.toLowerCase(),
     'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
+  amountInWallet: 0,
   currentUser: function () {
     return $('#login-input').find('.input').val();
   },
@@ -43,9 +44,11 @@ App = {
   },
   customerOwnedProduct: async function () {
     customer = this.userWallet(this.currentUser());
+    this.amountInWallet = await paymentService.balanceOf(customer);
+    console.log(this.amountInWallet);
     for (let i = 0; i <= this.store.length; i++) {
       if(this.store[i] != undefined){
-        const product = await this.store[i].product;
+        const product = this.store[i].product;
         purchasersArray = await this.getWhoBoughtProduct(product);
         if (purchasersArray.purchasers.includes(customer)) {
           $('#' + product.replace(/\s/g, '') + '-buy').text('Purchased').attr('disabled', true);
@@ -90,7 +93,7 @@ App = {
       "comment": commentText
     };
     this.addCommentsInMemory(reqBody);
-    await commentsService.postComment(reqBody);
+    commentsService.postComment(reqBody);
   },
   postComment: async function (commentID) {
     let commentTextElement = $('#' + commentID + '-comment-area');
@@ -98,7 +101,7 @@ App = {
     if (commentText == '') return;
     this.showComment(commentText, commentID);
     commentTextElement.val('');
-    await this.storeNewComment(commentText, commentID);
+    this.storeNewComment(commentText, commentID);
     this.readCommentsInMemory();
   },
   showComment: function (comment, commentID) {
@@ -120,9 +123,8 @@ App = {
     }
   },
   payForProduct: async function (buyer, seller, amount, productID) {
-    await purchaseService.purchaseProduct(productID, buyer);
-    await paymentService.transferFrom(buyer, seller, amount);
-    $('#' + productID.replace(/\s/g, '') + '-buy').removeClass('is-loading');
+    purchaseService.purchaseProduct(productID, buyer);
+    paymentService.transferFrom(buyer, seller, amount);
     alert('Thanks for shopping');
     console.log('purchase complete');
   },
@@ -133,12 +135,10 @@ App = {
       return;
     }
     store = this.userWallet('STORE');
-    amountInWallet = await paymentService.balanceOf(user);
-    if (amountInWallet < productPrice) {
+    if (this.amountInWallet < productPrice) {
       alert("You Don't Have Enough Money");
       return;
     }
-    $('#' + productID.replace(/\s/g, '') + '-buy').addClass('is-loading');
     this.payForProduct(user, store, productPrice, productID)
     $('#' + productID.replace(/\s/g, '') + '-buy').text('Purchased');
     this.customerOwnedProduct();

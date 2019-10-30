@@ -1,3 +1,7 @@
+[![images/tutorial_5_video.png](images/tutorial_5_video.png)](https://www.youtube.com/watch?v=neVEkirzjjk)
+
+---
+
 # Run Your Ecommerce Marketplace App
 Goal: Bringing all the microservices together in one application and getting it running.
 

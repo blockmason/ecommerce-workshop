@@ -1,3 +1,7 @@
+[![images/tutorial_3_video.png](images/tutorial_3_video.png)](https://www.youtube.com/watch?v=YFholFb4rDs)
+
+---
+
 # Interact with Smart Contract Functions
 Goal: Use Link APIs to interact with the previously deployed `Purchasing`, `custom token` and `Comments` smart contracts. 
 

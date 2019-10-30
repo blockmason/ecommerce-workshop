@@ -1,3 +1,7 @@
+[![images/tutorial_2_video.png](images/tutorial_2_video.png)](https://www.youtube.com/watch?v=51DNVhmURyE)
+
+---
+
 # Create and Deploy Smart Contracts
 Goal: Create a 'purchasing', 'custom token' and 'comments' smart contracts and deploy them to the blockchain. 
 

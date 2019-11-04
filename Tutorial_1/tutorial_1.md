@@ -12,18 +12,6 @@ In order to store data on a public blockchain network, you will need to obtain s
 
 For example, the Ethereum blockchain uses Ether or ETH as it's underlying utility token. Another blockchain network, GoChain, uses GO tokens.
 
-But first let's take a look at what GoChain is all about
-
----
-
-![Images/Slide_1.jpg](Images/Slide_1.jpg)
-![Images/Slide_2.jpg](Images/Slide_2.jpg)
-![Images/Slide_3.jpg](Images/Slide_3.jpg)
-![Images/Slide_4.jpg](Images/Slide_4.jpg)
-![Images/Slide_5.jpg](Images/Slide_5.jpg)
-
----
-
 Tokens are specific to a network and this also applies between test and mainnet (production) networks. For example, you can obtain ETH tokens specific for the Ethereum Ropsten testnet for free since it is designed for test purposes. Mainnet tokens, however, usually need to be bought from a cryptocurrency exchange.
 
 > For the public Ethereum blockchain, follow the setup steps outlined here: https://github.com/blockmason/link-onboarding/blob/master/Ethereum.md#setup . The setup requires 3 steps:

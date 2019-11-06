@@ -1,3 +1,7 @@
+[![images/tutorial_1_video.png](images/tutorial_1_video.png)](https://www.youtube.com/watch?v=PRRVt4E_bsI&list=PLaNne2eDpfGl_HkIiTgSR4oce1NxAPjMw&index=2)
+
+---
+
 # Blockmason Link & Blockchain Network Token Setup
 Goal: Setup your Link account and obtain the test utility tokens for your blockchain network of choice. 
 

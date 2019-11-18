@@ -6,8 +6,8 @@ App = {
   store: [],
   commentsInMemory: [],
   walletMapping: {
-    'Drake': '0xc1b63e1bb4aedfbce9cf44316e7738f086d33219'.toLowerCase(),
-    'Bianca': '0x83fe96cdd189e4f3c965f37309e1597a8e76aae2'.toLowerCase(),
+    'Drake': '0x50A98FC5FfE1adCE8B8C087B70B33217a9d65013'.toLowerCase(),
+    'Bianca': '0xfF970382280B6c7a46962ddD08e7d591550E6B53'.toLowerCase(),
     'Harish': '0xFeE9813A4B268793D4Edc6DF11A760C3c07a2c98'.toLowerCase(),
     'STORE': '0xe1c0f84e2cf7b16a56a58b839d21cdda79f55a44'.toLowerCase()
   },
@@ -19,9 +19,13 @@ App = {
     return this.walletMapping[user];
   },
   init: async function () {
-    this.store = await purchaseService.getProducts();
+    console.log('loading products');
+    const products = await purchaseService.getProducts();
+    this.store = products.data
+    console.log('store data is', this.store);
     this.printProducts();
     this.printComments();
+    console.log('products loaded');
   },
   showProduct: function (product) {
     $("#template-object").clone().prependTo("#product-area").attr("id", product.id).removeClass("is-hidden");
@@ -65,7 +69,7 @@ App = {
       this.showProduct(this.store[i])
     }
   },
-  createNewProduct: function () {
+  createNewProduct: async function () {
     newProductName = $("#new-product-name").val();
     newProductImage = $("#new-product-image").val();
     newProductCompany = $("#new-product-company").val();
@@ -76,7 +80,7 @@ App = {
     newProduct = { product: newProductName, id: newProductID, url: newProductImage, description: newProductDescription, company: newProductCompany, quantity: newProductAmount, price: newProductPrice }
     this.clearProductModal();
     this.showProduct(newProduct);
-    purchaseService.addProduct(newProductName, newProductAmount, newProductImage, newProductDescription, newProductPrice, newProductCompany, newProductID);
+    await purchaseService.addProduct(newProductName, newProductAmount, newProductImage, newProductDescription, newProductPrice, newProductCompany, newProductID);
   },
   clearProductModal: function () {
     $('.modal').removeClass('is-active');
@@ -123,8 +127,8 @@ App = {
     }
   },
   payForProduct: async function (buyer, seller, amount, productID) {
-    purchaseService.purchaseProduct(productID, buyer);
-    paymentService.transferFrom(buyer, seller, amount);
+    await purchaseService.purchaseProduct(productID, buyer);
+    await paymentService.transferFrom(buyer, seller, amount);
     alert('Thanks for shopping');
     console.log('purchase complete');
   },

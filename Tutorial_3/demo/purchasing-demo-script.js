@@ -54,23 +54,33 @@ async function getProductDetails(product) {
     "value": product
   };
   
-  const { quantity, price} = await project.get('/productList', payload);
-  console.log('Quantity and price of product ', product, 'is:', quantity, price);
+  const result = await project.get('/productList', payload);
+  console.log('Product details for ', product, 'are:', result);
 }
 
 async function getProducts() {
-  const result = await project.get('/events/Product');
-  console.log('Products are: ', result);
+  try {
+    const result = await project.get('/events/Product');
+    console.log('Products are: ', result);
+  } catch(err) {
+    console.log('Error is ', error);
+  }
+  
+}
+
+async function getAuthority() {
+  const { result } = await project.get('/authority');
+  console.log('authority is', result);
 }
 
 // Set test product
-const item = "yellow_tie";
-const id = 'yellowtie';
-const addQuantity = 3;
-const url = '';
-const description = 'Nice bright yellow tie';
-const price = '$89.99';
-const company = 'gucci';
+const item = "soccerball";
+const id = 'soccerball';
+const addQuantity = 10;
+const url = 'https://images.unsplash.com/photo-1554728667-662368ae729a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
+const description = 'Nice ball';
+const price = '89.99';
+const company = 'FIFA';
 
 // Function Calls
 
@@ -79,5 +89,6 @@ const company = 'gucci';
 // purchaseProduct(item);
 // getProductDetails(item);
 getProducts();
+// getAuthority();
 
 
